@@ -2,30 +2,60 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from './../../Hook/useAuth';
-
+import toast from "react-hot-toast";
+import axios from "axios";
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Register() {
-    const {googleLogin}=useAuth()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data.email, data.name);
-  };
+
   const [imageUrl, setImageUrl] = useState(null);
+  const [img, setImg] = useState(null);
+  const navigate = useNavigate();
+  const { createUser, profileUpdate ,googleLogin ,setUser} = useAuth();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
+  const onSubmit = async (data) => {
+      try {
+          const formData = new FormData();
+          formData.append("image", img);
 
-   
-    const imageUrl = URL.createObjectURL(file);
-    setImageUrl(imageUrl);
+          const { data: imgData } = await axios.post(`https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMG_API}`, formData);
+
+
+          console.log(imgData.data.display_url);
+          createUser(data.email, data.password)
+              .then(() => {
+                  profileUpdate(data.name, imgData.data.display_url)
+                      .then((res) => {
+                          toast.success("Registration successful");
+                          setUser(res)
+                          
+                          reset(); 
+                          
+                      })
+                      navigate('/');
+              });
+      } catch (error) {
+          console.error('Error during registration:', error);
+          toast.error("Registration failed. Please try again later.");
+      }
   };
+
+  const handleImg = (event) => {
+      const file = event.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setImageUrl(imageUrl);
+      setImg(file);
+  };
+
+  const handleGoogle=()=>{
+    googleLogin()
+    toast.success("Registration successful");
+    navigate('/');
+  }
+
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Card color="transparent" shadow={false} className="p-8">
@@ -75,7 +105,10 @@ export function Register() {
               <input
                 id="fileInput"
                 type="file"
-                onChange={handleFileChange}
+                onChange={(e) => {
+                  handleImg(e);
+                  setImg(e.target.files[0]);
+                }}
                 className="hidden  mx-auto"
               />
             </label>
@@ -158,14 +191,14 @@ export function Register() {
             Sign Up
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
-            Already have an account?{" "}
-            <a
-              href="#"
+            Already have an account?
+            <Link
+              to='/login'
               className="font-medium text-primary"
-              onClick={() => console.log("Sign In clicked")}
+              
             >
-              Sign In
-            </a>
+              LogIn
+            </Link>
           </Typography>
           <div className="flex justify-center">
          <h2>OR</h2>
@@ -173,7 +206,7 @@ export function Register() {
          
         </form>
         <div className='flex justify-center gap-2 '>
-                        <button className="w-full"  onClick={googleLogin} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className=' w-6' src="https://i.ibb.co/3ShjXGS/google.png" alt="google"  />Google</div></button>
+                        <button className="w-full"  onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className=' w-6' src="https://i.ibb.co/3ShjXGS/google.png" alt="google"  />Google</div></button>
                         <button className="w-full"><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
 
                       

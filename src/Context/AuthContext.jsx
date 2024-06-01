@@ -12,15 +12,15 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 // import useAxios from "../hook/useAxios";
-
 
 const auth = getAuth(app);
 
 export const ContextData = createContext(null);
 
 const AuthContext = ({ children }) => {
-//   const axiosSecure = useAxios();
+  //   const axiosSecure = useAxios();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [favorite, setFavorite] = useState([]);
@@ -67,25 +67,34 @@ const AuthContext = ({ children }) => {
     return signInWithPopup(auth, GithubeProvider);
   };
 
+  const saveUser = async (user) => {
+    const currentUser = {
+      email: user?.email,
+      role: "user",
+     
+    };
+    const { data } = await axios.post(
+      `http://localhost:5000/users`,
+      currentUser
+    );
+    console.log('user database');
+    return data;
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //   const userEmail = currentUser?.email || user?.email;
-    //   const loggedEmail = { email: userEmail };
+      setUser(currentUser);
       if (currentUser) {
-        setUser(currentUser);
+       
         setLoading(false);
-        // axiosSecure.post('/jwt', loggedEmail)
-        // .then(res => {
-        //     console.log('token response', res.data);
-      
-        // })
+        saveUser(currentUser)
+        console.log('user access');
+
+
       } else {
         setLoading(false);
         setUser(null);
-        // axiosSecure.post('/logout')
-        // .then(res=>{
-        //   console.log(res.data);
-        // })
+  
       }
     });
     return () => {

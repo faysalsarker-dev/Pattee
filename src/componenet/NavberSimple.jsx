@@ -114,7 +114,7 @@ export function ProfileMenu() {
           </Typography>
         </MenuItem>
         <hr className="my-2 border-blue-gray-50" />
-        <MenuItem className="flex items-center gap-2 ">
+        <MenuItem onClick={logOut}  className="flex items-center gap-2 ">
           <svg
             width="16"
             height="14"
@@ -129,7 +129,7 @@ export function ProfileMenu() {
               fill="#90A4AE"
             />
           </svg>
-          <Typography onClick={logOut} variant="small" className="font-medium">
+          <Typography variant="small" className="font-medium">
             Sign Out
           </Typography>
         </MenuItem>
@@ -219,7 +219,7 @@ function NavList() {
 export function NavbarSimple() {
   const [openNav, setOpenNav] = React.useState(false);
   const {user} = useAuth()
- 
+ console.log(user);
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
  
