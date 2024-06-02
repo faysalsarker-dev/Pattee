@@ -51,8 +51,11 @@ export function Register() {
 
   const handleGoogle=()=>{
     googleLogin()
-    toast.success("Registration successful");
+    .then(()=>{
+        toast.success("Registration successful");
     navigate('/');
+    })
+  
   }
 
 

@@ -25,12 +25,14 @@ export function ProfileMenu() {
   return (
     <Menu>
       <MenuHandler>
-        <Avatar
-          variant="circular"
-          alt="tania andrew"
-          className="cursor-pointer"
-          src={user?.photoURL}
-        />
+     
+          <Avatar
+            variant="circular"
+            alt="tania andrew"
+            className="cursor-pointer h-10 w-10"
+            src={user?.photoURL}
+          />
+     
       </MenuHandler>
       <MenuList>
         <MenuItem className="flex items-center gap-2">
@@ -168,14 +170,14 @@ function NavList() {
         className="p-1 font-medium"
       >
                <NavLink
-          to="/"
+          to="/petlist"
           className={({ isActive }) =>
             isActive
               ? " text-[#007BFF] font-bold"
               : ""
           }
         >
-          Home
+         Pet List
         </NavLink>
       </Typography>
       <Typography
@@ -232,7 +234,7 @@ export function NavbarSimple() {
   }, []);
  
   return (
-    <Navbar className="mx-auto  sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
+    <Navbar className="mx-auto  sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-1 lg:px-8 lg:py-4">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
@@ -247,52 +249,65 @@ export function NavbarSimple() {
          
         </div>
 
-
-
-{
-  user? (<>
-    <div>
-           <ProfileMenu></ProfileMenu>
-        </div>
-  </>):(<>
-    <div>
-        <div className="flex items-center gap-x-1">
-      <Button variant="text" size="sm" className="hidden lg:inline-block">
-        <span>Log In</span>
-      </Button>
- <Link to='/register'>
-        <Button
-         
-          size="sm"
-          className="hidden lg:inline-block bg-primary text-white"
-        >
-          <span>Sign In</span>
-        </Button>
- </Link>
-    </div>
-        </div>
-  </>)
-}
-
-
-
-      
-
-
-
-      
-        <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
-        >
-          {openNav ? (
-            <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-          ) : (
-            <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-          )}
-        </IconButton>
+<div className="flex items-center gap-3">
+  
+  
+  {
+    user? (<>
+      <div className="sm:justify-self-end">
+             <ProfileMenu></ProfileMenu>
+          </div>
+    </>):(<>
+      <div>
+          <div className="flex items-center gap-x-1">
+    <NavLink  
+        to="/login"
+        className={({ isActive }) =>
+          isActive
+            ? " text-[#007BFF] font-bold"
+            : ""
+        }
+    
+    
+    >
+          <Button variant="text" size="sm" className=" lg:inline-block">
+            <span>Log In</span>
+          </Button>
+    </NavLink>
+   <Link to='/register'>
+          <Button
+           
+            size="sm"
+            className=" lg:inline-block bg-primary text-white"
+          >
+            <span>Sign In</span>
+          </Button>
+   </Link>
+      </div>
+          </div>
+    </>)
+  }
+  
+  
+  
+        
+  
+  
+  
+        
+          <IconButton
+            variant="text"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+            ripple={false}
+            onClick={() => setOpenNav(!openNav)}
+          >
+            {openNav ? (
+              <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+            ) : (
+              <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+            )}
+          </IconButton>
+</div>
       </div>
       <Collapse open={openNav}>
         <NavList />

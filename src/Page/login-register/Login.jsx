@@ -45,7 +45,7 @@ const Login = () => {
         <div className="flex justify-center items-center min-h-screen">
       <Card color="transparent" shadow={false} className="p-8">
         <Typography variant="h4" color="primary" className="text-center">
-          Register 
+          LogIn 
         </Typography>
         <form
           onSubmit={handleSubmit(onSubmit)}
