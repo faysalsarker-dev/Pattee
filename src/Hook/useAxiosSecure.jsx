@@ -1,17 +1,17 @@
 import axios from "axios";
 
 
-const axiosSecure = axios.create({
+const axiosCommon = axios.create({
   
     // baseURL: "https://server-teal-phi.vercel.app",
 baseURL: "http://localhost:5000/",
-    withCredentials: true
+  
 });
 
-const useAxios = () => {
+const useAxiosSecure = () => {
 
     
-    return axiosSecure;
+    return axiosCommon;
 };
 
-export default useAxios;
+export default useAxiosSecure;

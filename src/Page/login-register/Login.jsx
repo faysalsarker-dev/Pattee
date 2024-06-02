@@ -3,10 +3,11 @@ import toast from "react-hot-toast";
 import useAuth from "../../Hook/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 
 const Login = () => {
-    const { signIn,  googleLogin } = useAuth();
+    const { signIn,  googleLogin ,user} = useAuth();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const onSubmit = async (data) => {
@@ -38,6 +39,11 @@ const Login = () => {
 
 
 
+    useEffect(() => {
+      if (user) {
+          navigate(location.state ? location.state : '/');
+      }
+  }, [navigate,user]);
 
 
 

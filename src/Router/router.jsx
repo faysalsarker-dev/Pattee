@@ -4,6 +4,11 @@ import Home from "../Page/Home/Home";
 import { Register } from "../Page/login-register/Register";
 import Login from "../Page/login-register/Login";
 import Petlist from "../Page/petList/Petlist";
+import PetDetails from "../Page/PetDetails/PetDetails";
+import UserRoot from "../Root/UserRoot";
+import RouterProtector from "./RouterPrtector";
+import  Addpet  from "../Page/Dashboard/Addpet";
+
 
 const router = createBrowserRouter([
   {
@@ -15,20 +20,37 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path:'/petlist',
-        element:<Petlist></Petlist>
+        path: "/petlist",
+        element: <Petlist></Petlist>,
       },
       {
-        path:'/register',
-        element:<Register></Register>
+        path: "/pet/:id",
+        element: <PetDetails></PetDetails>,
       },
       {
-        path:'/login',
-        element:<Login></Login>
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
     ],
   },
- 
+  {
+    path: "/user-dashboard",
+    element: (
+      <RouterProtector>
+        <UserRoot></UserRoot>
+      </RouterProtector>
+    ),
+    children: [
+      {
+        path: "add-pet",
+        element: <Addpet></Addpet>,
+      },
+    ],
+  },
 ]);
 
 export default router;

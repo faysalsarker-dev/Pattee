@@ -7,6 +7,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export function CardDefault({ pd }) {
   return (
@@ -49,7 +50,7 @@ export function CardDefault({ pd }) {
 </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button className="bg-primary">viewing details</Button>
+       <Link to={`/pet/${pd._id}`}> <Button className="bg-primary">viewing details</Button></Link>
       </CardFooter>
     </Card>
   );

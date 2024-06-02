@@ -9,7 +9,7 @@ import axios from "axios";
 import { useQuery } from '@tanstack/react-query'
 
 
-import { Waypoint } from 'react-waypoint';
+
 
 
 
@@ -27,8 +27,6 @@ const Petlist = () => {
  
   const {
     data,
-    isLoading,
-    refetch,
   } = useQuery({
     queryKey: ['pet'],
     queryFn: async () => {
