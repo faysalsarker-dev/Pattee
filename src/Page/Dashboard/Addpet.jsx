@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { Button, Input, Typography, Textarea } from "@material-tailwind/react";
 import axios from "axios";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hook/useAuth";
 import { useMutation } from "@tanstack/react-query";
@@ -8,6 +8,17 @@ import useAxios from "../../Hook/useAxiosCommon";
 import toast from "react-hot-toast";
 import SyncLoader from "react-spinners/SyncLoader";
 import  Select  from 'react-select';
+import { useState } from "react";
+
+
+
+
+
+
+
+
+
+
 const options = [
   { value: "Cat", label: "Cat" },
   { value: "Dog", label: "Dog" },
@@ -16,13 +27,22 @@ const options = [
   { value: "Rabbit", label: "Rabbit" },
 ];
 const AddPet = () => {
+  
   const [imageUrl, setImageUrl] = useState(null);
   const [btnSpin, setBtnSpin] = useState(false);
   const [img, setImg] = useState(null);
+  const [date,setDate]=useState(new Date())
   const [selectedOption, setSelectedOption] = useState(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { user } = useAuth();
   const axiosCommon = useAxios();
+
+
+
+
+
+
+
 
   const { mutateAsync } = useMutation({
     mutationFn: async (info) => {
@@ -62,6 +82,7 @@ const AddPet = () => {
         short_des: data.short_des,
         long_des: data.log_des,
         category:selectedOption.value,
+        date:date,
         adopted: false,
         email: user?.email,
       };
@@ -218,6 +239,13 @@ const AddPet = () => {
             {errors.log_des && <span className="text-red-500">Long description is required</span>}
           </div>
         </div>
+   
+
+{/* <Editor></Editor> */}
+
+
+
+
         <Button disabled={btnSpin} type="submit" className="mt-6 bg-primary" fullWidth>
           {btnSpin ? <SyncLoader size={8} color="#FFFFFF" /> : 'Add Pet'}
         </Button>

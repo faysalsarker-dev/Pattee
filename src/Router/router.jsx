@@ -9,12 +9,14 @@ import UserRoot from "../Root/UserRoot";
 import RouterProtector from "./RouterPrtector";
 import  Addpet  from "../Page/Dashboard/Addpet";
 import Myaddpet from "../Page/Dashboard/mypet/Myaddpet";
+import Errpage from "../Page/404/Errpage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement:<Errpage></Errpage>,
     children: [
       {
         path: "/",

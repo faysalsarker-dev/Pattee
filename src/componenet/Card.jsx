@@ -21,7 +21,12 @@ export function CardDefault({ pd }) {
         </Typography>
 <div className="flex gap-4">
     <Typography>
-        {pd.age}
+        {pd.age} 
+
+    </Typography>
+    <Typography>
+        {pd.category} 
+
     </Typography>
     
     

@@ -6,14 +6,13 @@ import Select from "react-select";
 import { useForm } from "react-hook-form";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useQuery } from '@tanstack/react-query';
-import { IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 import useAxios from './../../Hook/useAxiosCommon';
 import { CardDefault } from './../../componenet/Card';
 
 const options = [
-  { value: "Cat", label: "Cat" },
-  { value: "Dog", label: "Dog" },
+  { value: "cat", label: "cat" },
+  { value: "dog", label: "dog" },
   { value: "Fish", label: "Fish" },
   { value: "Bird", label: "Bird" },
   { value: "Rabbit", label: "Rabbit" },
@@ -26,7 +25,7 @@ const Petlist = () => {
   const { register, handleSubmit} = useForm();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['pet',search,selectedOption],
+    queryKey: ['pets',search,selectedOption],
     queryFn: async () => {
       const sortValue = selectedOption ? selectedOption.value : '';
       const { data } = await axiosCommon.get(`/pet?search=${search}&sort=${sortValue}`);
@@ -95,11 +94,6 @@ const Petlist = () => {
         {data?.map(pd => <CardDefault key={pd._id} pd={pd}></CardDefault>)}
       </div>
       <div className="text-center my-8 flex justify-center">
-        <DefaultPagination 
-          // totalPages={data.totalPages}
-          // currentPage={data.currentPage}
-          // setPage={setPage}
-        />
       </div>
     </>
   );
@@ -107,51 +101,4 @@ const Petlist = () => {
 
 export default Petlist;
 
-const DefaultPagination = ({ totalPages, currentPage, setPage }) => {
-  const getItemProps = (index) => ({
-    variant: "text",
-    className: `${currentPage === index ? 'bg-primary text-white' : 'text-gray-700'}`,
-    onClick: () => setPage(index),
-  });
 
-  const next = () => {
-    if (currentPage < totalPages) {
-      setPage(currentPage + 1);
-    }
-  };
-
-  const prev = () => {
-    if (currentPage > 1) {
-      setPage(currentPage - 1);
-    }
-  };
-
-  return (
-    <div className="flex items-center gap-4">
-      <Button
-        variant="text"
-        className="flex items-center gap-2"
-        onClick={prev}
-        disabled={currentPage === 1}
-      >
-        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-      </Button>
-      <div className="flex items-center gap-2">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <IconButton key={index + 1} {...getItemProps(index + 1)}>
-            {index + 1}
-          </IconButton>
-        ))}
-      </div>
-      <Button
-        variant="text"
-        className="flex items-center gap-2"
-        onClick={next}
-        disabled={currentPage === totalPages}
-      >
-        Next
-        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-      </Button>
-    </div>
-  );
-};
