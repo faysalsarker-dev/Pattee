@@ -8,6 +8,7 @@ import PetDetails from "../Page/PetDetails/PetDetails";
 import UserRoot from "../Root/UserRoot";
 import RouterProtector from "./RouterPrtector";
 import  Addpet  from "../Page/Dashboard/Addpet";
+import Myaddpet from "../Page/Dashboard/mypet/Myaddpet";
 
 
 const router = createBrowserRouter([
@@ -46,8 +47,12 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "add-pet",
+        index:true,
         element: <Addpet></Addpet>,
+      },
+      {
+        index:'my-added-pet',
+        element: <Myaddpet></Myaddpet>,
       },
     ],
   },
