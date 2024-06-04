@@ -4,12 +4,13 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hook/useAuth";
 import { useMutation } from "@tanstack/react-query";
-import useAxios from "../../Hook/useAxiosCommon";
 import toast from "react-hot-toast";
 import SyncLoader from "react-spinners/SyncLoader";
 import  Select  from 'react-select';
 import { useState } from "react";
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 
 
@@ -35,18 +36,35 @@ const AddPet = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { user } = useAuth();
-  const axiosCommon = useAxios();
+  const axiosSecure = useAxiosSecure
 
 
 
+  const [value, setValue] = useState('');
 
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      ['bold', 'italic', 'underline'],
+      ['link', 'image'],
+      [{ 'align': [] }],
+      ['clean'] 
+    ],
+  };
+  const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'video'
+  ];
 
 
 
 
   const { mutateAsync } = useMutation({
     mutationFn: async (info) => {
-      const { data } = await axiosCommon.post('/add-pet', info);
+      const { data } = await axiosSecure.post('/add-pet', info);
       return data;
     },
     onSuccess: () => {
@@ -80,7 +98,7 @@ const AddPet = () => {
         age: data.pet_age,
         location: data.location,
         short_des: data.short_des,
-        long_des: data.log_des,
+        long_des: value,
         category:selectedOption.value,
         date:date,
         adopted: false,
@@ -227,16 +245,19 @@ const AddPet = () => {
             <Typography variant="h6" color="blue-gray">
               Long Description
             </Typography>
-            <Textarea
-              size="lg"
-              {...register("log_des", { required: true })}
-              placeholder="Enter detailed description"
-              className={`!border-t-blue-gray-200 focus:!border-primary ${errors.log_des ? 'border-red-500' : ''}`}
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            {errors.log_des && <span className="text-red-500">Long description is required</span>}
+      
+            <div className="my-8 h-48">
+      <ReactQuill   
+      
+      className="h-full"
+      theme="snow" 
+        value={value} 
+        onChange={setValue} 
+        modules={modules}
+        formats={formats} />
+    </div>
+
+           
           </div>
         </div>
    
@@ -246,7 +267,7 @@ const AddPet = () => {
 
 
 
-        <Button disabled={btnSpin} type="submit" className="mt-6 bg-primary" fullWidth>
+        <Button disabled={btnSpin} type="submit" className="mt-10 bg-primary" fullWidth>
           {btnSpin ? <SyncLoader size={8} color="#FFFFFF" /> : 'Add Pet'}
         </Button>
       </form>

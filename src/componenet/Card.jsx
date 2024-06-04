@@ -19,13 +19,14 @@ export function CardDefault({ pd }) {
         <Typography variant="h5" color="blue-gray" className="mb-2">
           {pd.name}
         </Typography>
+        <Typography>
+       
+       Category: {pd.category} 
+       </Typography>
 <div className="flex gap-4">
+   
     <Typography>
-        {pd.age} 
-
-    </Typography>
-    <Typography>
-        {pd.category} 
+    Age: {pd.age} 
 
     </Typography>
     

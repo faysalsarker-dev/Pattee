@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import useAxios from './../../Hook/useAxiosCommon';
 import { CardDefault } from './../../componenet/Card';
+import Skeleton from "react-loading-skeleton";
 
 const options = [
   { value: "cat", label: "cat" },
@@ -39,7 +40,7 @@ const Petlist = () => {
    
   };
 
-  if (isLoading) return <p>Loading...</p>;
+ 
   if (error) return <p>An error occurred</p>;
 
   return (
@@ -91,7 +92,24 @@ const Petlist = () => {
 </div>
 
       <div className="mt-20 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-        {data?.map(pd => <CardDefault key={pd._id} pd={pd}></CardDefault>)}
+        {/* {data?.map(pd => <CardDefault key={pd._id} pd={pd}></CardDefault>)} */}
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="p-4">
+              <Skeleton height={200} />
+              <Skeleton height={30} className="mt-4" />
+              <Skeleton height={20} className="mt-2" />
+              <Skeleton height={20} className="mt-2" />
+            </div>
+          ))
+        ) : (
+          data?.map(pd => <CardDefault key={pd._id} pd={pd}></CardDefault>)
+        )}
+
+
+
+
+
       </div>
       <div className="text-center my-8 flex justify-center">
       </div>
