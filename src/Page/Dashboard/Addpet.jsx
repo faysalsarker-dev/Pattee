@@ -20,13 +20,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 
 
 
-const options = [
-  { value: "Cat", label: "Cat" },
-  { value: "Dog", label: "Dog" },
-  { value: "Fish", label: "Fish" },
-  { value: "Bird", label: "Bird" },
-  { value: "Rabbit", label: "Rabbit" },
-];
+
 const AddPet = () => {
   
   const [imageUrl, setImageUrl] = useState(null);
@@ -36,11 +30,24 @@ const AddPet = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure
+  const axiosSecure = useAxiosSecure()
 
 
 
   const [value, setValue] = useState('');
+
+
+
+
+
+  const options = [
+    { value: "Cat", label: "Cat" },
+    { value: "Dog", label: "Dog" },
+    { value: "Fish", label: "Fish" },
+    { value: "Bird", label: "Bird" },
+    { value: "Rabbit", label: "Rabbit" },
+  ];
+
 
   const modules = {
     toolbar: [

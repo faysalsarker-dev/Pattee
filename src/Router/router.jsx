@@ -8,8 +8,9 @@ import PetDetails from "../Page/PetDetails/PetDetails";
 import UserRoot from "../Root/UserRoot";
 import RouterProtector from "./RouterPrtector";
 import  Addpet  from "../Page/Dashboard/Addpet";
-import Myaddpet from "../Page/Dashboard/mypet/Myaddpet";
 import Errpage from "../Page/404/Errpage";
+import Mypets from "../Page/Dashboard/mypet/Mypets";
+
 
 
 const router = createBrowserRouter([
@@ -52,10 +53,12 @@ const router = createBrowserRouter([
         index:true,
         element: <Addpet></Addpet>,
       },
+  
       {
-        index:'my-added-pet',
-        element: <Myaddpet></Myaddpet>,
+        path:'my-pets',
+        element: <Mypets></Mypets>,
       },
+     
     ],
   },
 ]);
