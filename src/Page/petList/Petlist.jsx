@@ -29,7 +29,7 @@ const Petlist = () => {
     queryKey: ['pets', search, selectedOption],
     queryFn: async ({ pageParam = 1 }) => {
       const cetegory = selectedOption ? selectedOption.value : '';
-      const response = await axiosCommon.get(`/pet?search=${search}&sort=${cetegory}&page=${pageParam}`);
+      const response = await axiosCommon.get(`/pet?search=${search}&category=${cetegory}&page=${pageParam}`);
       return response.data;
     },
     getNextPageParam: (lastPage) => lastPage.hasNext ? lastPage.nextPage : undefined,

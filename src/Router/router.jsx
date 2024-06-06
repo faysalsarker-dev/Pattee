@@ -11,6 +11,8 @@ import  Addpet  from "../Page/Dashboard/Addpet";
 import Errpage from "../Page/404/Errpage";
 import Mypets from "../Page/Dashboard/mypet/Mypets";
 import UpdatePet from "../Page/Dashboard/PetUpdate/UpdatePet";
+import Category from "../Page/category/Category";
+import CreateDonation from "../Page/Donation/CreateDonation";
 
 
 
@@ -30,9 +32,14 @@ const router = createBrowserRouter([
         element: <Petlist></Petlist>,
       },
       {
+        path: "/category/:cetegory",
+        element: <Category></Category>,
+      },
+      {
         path: "/pet/:id",
         element: <PetDetails></PetDetails>,
       },
+   
       {
         path: "/register",
         element: <Register></Register>,
@@ -63,6 +70,10 @@ const router = createBrowserRouter([
       {
         path:'Update-pet/:id',
         element:<UpdatePet />,
+      },
+      {
+        path: "Create-Donation-Campaigns",
+        element: <CreateDonation/>,
       },
      
     ],

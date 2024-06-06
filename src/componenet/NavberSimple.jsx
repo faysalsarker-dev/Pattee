@@ -90,8 +90,8 @@ function NavList() {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? " text-[#007BFF] font-bold"
-              : ""
+              ? "text-[#007BFF] font-bold transform ease-in border-b-2 border-[#007BFF] transition-transform transition-border-b duration-300"
+              : "border-b-2 border-transparent transition-border-b duration-300"
           }
         >
           Home
@@ -107,8 +107,8 @@ function NavList() {
           to="/petlist"
           className={({ isActive }) =>
             isActive
-              ? " text-[#007BFF] font-bold"
-              : ""
+              ? "text-[#007BFF] font-bold border-b-2 border-[#007BFF] transition-transform transition-border-b duration-300"
+              : "border-b-2 border-transparent transition-border-b duration-300"
           }
         >
          Pet List
@@ -121,33 +121,17 @@ function NavList() {
         className="p-1 font-medium"
       >
                 <NavLink
-          to="/"
+          to="/Donation-Campaigns"
           className={({ isActive }) =>
             isActive
-              ? " text-[#007BFF] font-bold"
-              : ""
+              ? "text-[#007BFF] font-bold transform ease-in border-b-2 border-[#007BFF] transition-transform transition-border-b duration-300"
+              : "border-b-2 border-transparent transition-border-b duration-300"
           }
         >
-          Home
+         Donation Campaigns
         </NavLink>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-medium"
-      >
-               <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive
-              ? " text-[#007BFF] font-bold"
-              : ""
-          }
-        >
-          Home
-        </NavLink>
-      </Typography>
+
     </ul>
   );
 }

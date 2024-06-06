@@ -16,27 +16,27 @@ const Home = () => {
     {
       name:"Cats",
       img:Catimg,
-      link:'/'
+      link:'/category/Cat'
     },
     {
       name:"Dogs",
       img:Dogimg,
-      link:'/'
+      link:'/category/Dog'
     },
     {
       name:"Birds",
       img:birdimg,
-      link:'/'
+      link:'/category/Bird'
     },
     {
       name:"Fish",
       img:Fishimg,
-      link:'/'
+      link:'/category/Fish'
     },
     {
       name:"Rabbit",
       img:Rabbitimg,
-      link:'/'
+      link:'/category/Rabbit'
     },
    
   ]

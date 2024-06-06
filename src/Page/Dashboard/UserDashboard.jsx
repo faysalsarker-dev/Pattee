@@ -85,12 +85,14 @@ export function UserDashBoard() {
             />
           </ListItemSuffix>
         </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Create Donation Campaign
-        </ListItem>
+ <NavLink to='Create-Donation-Campaigns'  className={navLinkClass}>
+          <ListItem>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Create Donation Campaign
+          </ListItem>
+ </NavLink>
         <ListItem>
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />
