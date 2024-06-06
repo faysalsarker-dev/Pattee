@@ -10,6 +10,8 @@ import RouterProtector from "./RouterPrtector";
 import  Addpet  from "../Page/Dashboard/Addpet";
 import Errpage from "../Page/404/Errpage";
 import Mypets from "../Page/Dashboard/mypet/Mypets";
+import UpdatePet from "../Page/Dashboard/PetUpdate/UpdatePet";
+
 
 
 
@@ -57,6 +59,10 @@ const router = createBrowserRouter([
       {
         path:'my-pets',
         element: <Mypets></Mypets>,
+      },
+      {
+        path:'Update-pet/:id',
+        element:<UpdatePet />,
       },
      
     ],

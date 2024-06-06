@@ -31,7 +31,8 @@
     "react-spinners": "^0.13.8",
     "react-table": "^7.8.0",
     "slate": "^0.103.0",
-    "slate-react": "^0.104.0"
+    "slate-react": "^0.104.0",
+    "sweetalert2": "^11.11.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
