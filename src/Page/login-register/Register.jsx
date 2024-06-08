@@ -5,14 +5,14 @@ import useAuth from './../../Hook/useAuth';
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
-
+import BeatLoader from "react-spinners/BeatLoader";
 export function Register() {
 
 
   const [imageUrl, setImageUrl] = useState(null);
   const [img, setImg] = useState(null);
   const navigate = useNavigate();
-  const { createUser, profileUpdate ,googleLogin ,setUser} = useAuth();
+  const { createUser, profileUpdate ,googleLogin ,setUser,loading} = useAuth();
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = async (data) => {
@@ -35,10 +35,12 @@ export function Register() {
                           
                       })
                       navigate('/');
-              });
+              })
+
+              
       } catch (error) {
           console.error('Error during registration:', error);
-          toast.error("Registration failed. Please try again later.");
+          toast.error("Registration failed. Please try again later. ");
       }
   };
 
@@ -186,12 +188,13 @@ export function Register() {
           </div>
 
           <Button
+          disabled={loading}
             type="submit"
             className="mt-6 bg-primary"
             fullWidth
             variant="filled"
           >
-            Sign Up
+           {loading? <BeatLoader size={6} color="#FFFFFF" />: 'Sign Up'}
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?
@@ -209,8 +212,15 @@ export function Register() {
          
         </form>
         <div className='flex justify-center gap-2 '>
-                        <button className="w-full"  onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className=' w-6' src="https://i.ibb.co/3ShjXGS/google.png" alt="google"  />Google</div></button>
-                        <button className="w-full"><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
+                        <button className="w-full"  disabled={loading} onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3">    {loading ? (
+      <BeatLoader size={6} />
+    ) : (
+      <>
+        <img className="w-6" src="https://i.ibb.co/3ShjXGS/google.png" alt="google" />
+        Google
+      </>
+    )}</div></button>
+                        <button className="w-full" disabled={loading}><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
 
                       
                     </div>

@@ -69,7 +69,9 @@ const AuthContext = ({ children }) => {
 
   const saveUser = async (user) => {
     const currentUser = {
+      name:user?.displayName,
       email: user?.email,
+      profile:user?.photoURL,
       role: "user",
      
     };
@@ -77,7 +79,6 @@ const AuthContext = ({ children }) => {
       `http://localhost:5000/users`,
       currentUser
     );
-    console.log('user database');
     return data;
   };
 
@@ -85,9 +86,9 @@ const AuthContext = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-       
         setLoading(false);
         saveUser(currentUser)
+        console.log(currentUser);
         console.log('user access');
 
 
@@ -100,8 +101,9 @@ const AuthContext = ({ children }) => {
     return () => {
       unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, auth]);
+ 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
 
   const contextData = {
     createUser,

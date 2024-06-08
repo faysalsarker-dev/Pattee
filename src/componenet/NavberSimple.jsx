@@ -20,6 +20,7 @@ import {
  
 } from "@material-tailwind/react";
 import useAuth from "../Hook/useAuth";
+import useAdmin from "../Hook/useAdmin";
  
 export function ProfileMenu() {
   const {user,logOut}=useAuth()
@@ -121,7 +122,7 @@ function NavList() {
         className="p-1 font-medium"
       >
                 <NavLink
-          to="/Donation-Campaigns"
+          to="/All-Donation-Campaigns"
           className={({ isActive }) =>
             isActive
               ? "text-[#007BFF] font-bold transform ease-in border-b-2 border-[#007BFF] transition-transform transition-border-b duration-300"
@@ -138,7 +139,9 @@ function NavList() {
  
 export function NavbarSimple() {
   const [openNav, setOpenNav] = React.useState(false);
-  const {user} = useAuth()
+  const {user} = useAuth();
+  const role = useAdmin()
+  console.log(role);
 
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);

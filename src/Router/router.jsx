@@ -13,6 +13,13 @@ import Mypets from "../Page/Dashboard/mypet/Mypets";
 import UpdatePet from "../Page/Dashboard/PetUpdate/UpdatePet";
 import Category from "../Page/category/Category";
 import CreateDonation from "../Page/Donation/CreateDonation";
+import AllCampaigns from "../Page/Donation-campaigns/AllCampaigns";
+import Details from "../Page/Donation-campaigns/Details";
+import MyCampaigns from "../Page/Donation/myDonation/MyCampaigns";
+import UpdateCam from "../Page/Dashboard/PetUpdate/UpdateCam";
+import UsersList from './../Page/Admin/UsersList';
+import Allpet from "../Page/Admin/Allpet";
+import AllDonations from "../Page/Admin/AllDonations";
 
 
 
@@ -39,14 +46,26 @@ const router = createBrowserRouter([
         path: "/pet/:id",
         element: <PetDetails></PetDetails>,
       },
+      {
+        path: "/pet/:id",
+        element: <PetDetails></PetDetails>,
+      },
    
       {
-        path: "/register",
-        element: <Register></Register>,
+        path: "/All-Donation-Campaigns",
+        element: <AllCampaigns/>,
+      },
+      {
+        path: "/Donation-details/:id",
+        element: <Details/>,
       },
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register/>,
       },
     ],
   },
@@ -75,9 +94,30 @@ const router = createBrowserRouter([
         path: "Create-Donation-Campaigns",
         element: <CreateDonation/>,
       },
+      {
+        path: "My-campaigns",
+        element: <MyCampaigns/>,
+      },
+      {
+        path: "Update-campaigns/:id",
+        element: <UpdateCam/>,
+      },
+      {
+        path: "Users-list",
+        element: <UsersList/>,
+      },
+      {
+        path: "All-pets",
+        element:<Allpet/>,
+      },
+      {
+        path: "All-Donation",
+        element:<AllDonations/>,
+      },
      
     ],
   },
+ 
 ]);
 
 export default router;

@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 export function CardDefault({ pd }) {
   return (
     <Card className="mt-6 ">
-      <CardHeader color="blue-gray" className="relative h-56">
-        <img src={pd.image} alt={pd.name} />
+      <CardHeader color="blue-gray" className="relative ">
+        <img className="w-full" src={pd.image} alt={pd.name} />
       </CardHeader>
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">

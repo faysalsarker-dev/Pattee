@@ -14,8 +14,8 @@ const Mypets = () => {
   const { data = [], isLoading, error, refetch } = useQuery({
     queryKey: [user?.email],
     queryFn: async () => {
-      const { data: info=[] } = await axiosSecure.get(`/my-pets/${user?.email}`);
-      return info;
+      const { data } = await axiosSecure.get(`/my-pets/${user?.email}`);
+      return data;
     },
   });
 
@@ -102,9 +102,12 @@ const Mypets = () => {
   }
 
   return (
-    <div className="-mt-10 h-[100vh]">
-      <MyTable data={data} onEdit={handleEdit} onDelete={handleDelete} />
-    </div>
+ <>
+      <div className="-mt-10 h-[100vh]">
+        <MyTable data={data} onEdit={handleEdit} onDelete={handleDelete} />
+      </div>
+      
+ </>
   );
 };
 

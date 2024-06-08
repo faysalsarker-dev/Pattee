@@ -7,7 +7,7 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Chip,
+  Chip
 } from '@material-tailwind/react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
@@ -97,7 +97,7 @@ const MyTable = ({ data,onEdit, onDelete }) => {
       columns,
       data,
     },
-    useSortBy // Add sorting functionality
+    useSortBy 
   );
 
   const {
@@ -121,10 +121,10 @@ const MyTable = ({ data,onEdit, onDelete }) => {
         <thead className="sticky top-0 z-10 bg-white">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-              {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((column,idx) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  key={column.id}
+                  key={idx}
                   className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                   onClick={() => handleSort(column.id)}
                 >
@@ -158,6 +158,7 @@ const MyTable = ({ data,onEdit, onDelete }) => {
           })}
         </tbody>
       </table>
+  
     </CardBody>
   );
 };

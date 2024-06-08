@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 
 const Login = () => {
-    const { signIn,  googleLogin ,user} = useAuth();
+    const { signIn,  googleLogin ,user,loading} = useAuth();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const onSubmit = async (data) => {
@@ -31,8 +31,11 @@ const Login = () => {
   
     const handleGoogle=()=>{
       googleLogin()
-      toast.success("Registration successful");
-      navigate('/');
+      .then(()=>{
+        toast.success("Registration successful");
+        navigate('/');
+      })
+      
     }
   
 
@@ -113,6 +116,7 @@ const Login = () => {
           </div>
 
           <Button
+          disabled={loading}
             type="submit"
             className="mt-6 bg-primary"
             fullWidth
@@ -136,8 +140,8 @@ const Login = () => {
          
         </form>
         <div className='flex justify-center gap-2 '>
-                        <button className="w-full"  onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className=' w-6' src="https://i.ibb.co/3ShjXGS/google.png" alt="google"  />Google</div></button>
-                        <button className="w-full"><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
+                        <button className="w-full"  disabled={loading} onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className=' w-6' src="https://i.ibb.co/3ShjXGS/google.png" alt="google"  />Google</div></button>
+                        <button className="w-full" disabled={loading}><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
 
                       
                     </div>

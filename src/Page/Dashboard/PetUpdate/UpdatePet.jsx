@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { Button, Input, Typography } from "@material-tailwind/react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -11,8 +10,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useAuth from "../../../Hook/useAuth";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
+import  axios  from 'axios';
 const UpdatePet = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [btnSpin, setBtnSpin] = useState(false);
@@ -24,6 +23,7 @@ const UpdatePet = () => {
   const [value, setValue] = useState('');
   const [host, setHost] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate()
 
   const { data: petData = {} } = useQuery({
     queryKey: [user?.email, id],
@@ -77,6 +77,7 @@ const UpdatePet = () => {
       setBtnSpin(false);
       toast.success("Pet updated successfully");
       reset();
+      navigate('/user-dashboard/my-pets')
       setImageUrl(null);
       setImg(null);
     },
@@ -98,6 +99,7 @@ const UpdatePet = () => {
         const { data: hostImages } = await axios.post(
           `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMG_API}`,
           formData
+
         );
         imgData = hostImages;
       }
