@@ -1,4 +1,3 @@
-
 import {
   Card,
   Typography,
@@ -17,8 +16,10 @@ import {
 import { NavLink } from "react-router-dom";
 import useAdmin from "../../Hook/useAdmin";
 
+
 export function UserDashBoard() {
-  const isAdmin= useAdmin()
+  const isAdmin = useAdmin();
+
   const navLinkClass = ({ isActive }) =>
     isActive ? "bg-[#F0F2F4] rounded-lg font-bold" : "";
 
@@ -30,49 +31,74 @@ export function UserDashBoard() {
         </Typography>
       </div>
       <List>
-        {
-          isAdmin && <>
-             <NavLink to="Users-list" className={navLinkClass}>
-          <ListItem>
-            <ListItemPrefix>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-</svg>
-
-            </ListItemPrefix>
-             Users
-          </ListItem>
-        </NavLink>
-             <NavLink to="All-pets" className={navLinkClass}>
-          <ListItem>
-            <ListItemPrefix>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-</svg>
-
-            </ListItemPrefix>
-             All pets
-          </ListItem>
-        </NavLink>
-          
-             <NavLink to="All-Donation" className={navLinkClass}>
-          <ListItem>
-            <ListItemPrefix>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
-</svg>
-
-
-            </ListItemPrefix>
-            All Donation
-          </ListItem>
-        </NavLink>
-          
-          
-          
+        {isAdmin && (
+          <>
+            <NavLink to="Users-list" className={navLinkClass}>
+              <ListItem>
+                <ListItemPrefix>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                    />
+                  </svg>
+                </ListItemPrefix>
+                Users
+              </ListItem>
+            </NavLink>
+            <NavLink to="All-pets" className={navLinkClass}>
+              <ListItem>
+                <ListItemPrefix>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+                    />
+                  </svg>
+                </ListItemPrefix>
+                All pets
+              </ListItem>
+            </NavLink>
+            <NavLink to="All-Donation" className={navLinkClass}>
+              <ListItem>
+                <ListItemPrefix>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z"
+                    />
+                  </svg>
+                </ListItemPrefix>
+                All Donation
+              </ListItem>
+            </NavLink>
           </>
-        }
-        <NavLink to="/user-dashboard" className={navLinkClass}>
+        )}
+      <NavLink to="/user-dashboard" end  className={navLinkClass}>
           <ListItem>
             <ListItemPrefix>
               <svg
@@ -129,22 +155,22 @@ export function UserDashBoard() {
             />
           </ListItemSuffix>
         </ListItem>
- <NavLink to='Create-Donation-Campaigns'  className={navLinkClass}>
+        <NavLink to="Create-Donation-Campaigns" className={navLinkClass}>
           <ListItem>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>
             Create Donation Campaign
           </ListItem>
- </NavLink>
-   <NavLink to='My-campaigns' className={navLinkClass}>
+        </NavLink>
+        <NavLink to="My-campaigns" className={navLinkClass}>
           <ListItem>
             <ListItemPrefix>
               <Cog6ToothIcon className="h-5 w-5" />
             </ListItemPrefix>
             My Donation Camp
           </ListItem>
-   </NavLink>
+        </NavLink>
         <ListItem>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />

@@ -1,20 +1,40 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxiosSecure from "./../../../Hook/useAxiosSecure";
+
 import useAuth from "./../../../Hook/useAuth";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import MyTable from "./Myadd";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; // Import useEffect
+import { Pagination } from "../../../componenet/Pagination";
+import useMypet from "../../../utility/useMypet";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+
 
 const Mypets = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const count = useMypet();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    if (count) {
+   
+      setTotalPages(Math.ceil(count / 10));
+    }
+  }, [count]); 
+
+  console.log(totalPages);
+
   const { data = [], isLoading, error, refetch } = useQuery({
-    queryKey: [user?.email],
+    queryKey: ['my-added-pet',user?.email, currentPage],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/my-pets/${user?.email}`);
+      const { data } = await axiosSecure.get(
+        `/my-pets/${user?.email}?page=${currentPage}&size=${10}`
+      );
       return data;
     },
   });
@@ -31,9 +51,8 @@ const Mypets = () => {
 
   const handleEdit = (pet) => {
     console.log("Edit pet:", pet);
-    // Ensure that pet._id is valid
+
     if (pet && pet._id) {
-      // Use backticks for template literals
       navigate(`/user-dashboard/Update-pet/${pet._id}`);
     }
   };
@@ -68,10 +87,7 @@ const Mypets = () => {
             text: "Your file has been deleted.",
             icon: "success",
           });
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({
             title: "Cancelled",
             text: "Your imaginary file is safe :)",
@@ -102,12 +118,19 @@ const Mypets = () => {
   }
 
   return (
- <>
-      <div className="-mt-10 h-[100vh]">
+    <>
+      <div className=" h-[100vh]">
+        <h3 className="text-3xl font-bold">My added pets</h3>
         <MyTable data={data} onEdit={handleEdit} onDelete={handleDelete} />
+        {count.count > 10 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
-      
- </>
+    </>
   );
 };
 

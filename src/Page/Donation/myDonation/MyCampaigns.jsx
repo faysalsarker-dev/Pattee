@@ -6,27 +6,42 @@ import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useMycam from "../../../utility/useMycam";
+import { Pagination } from "../../../componenet/Pagination";
+import { useEffect, useState } from "react";
 
 
 
 const MyCampaigns = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
     const {user} = useAuth()
     const axiosSecure = useAxiosSecure()
     const navigate = useNavigate()
+    const count = useMycam()
+
+    useEffect(() => {
+      if (count) {
+     
+        setTotalPages(Math.ceil(count / 10));
+      }
+    }, [count]); 
+
+
     const { data = [] } = useQuery({
-        queryKey: [user?.email],
+        queryKey: ['My-campaigns',user?.email],
         queryFn: async () => {
-          const { data } = await axiosSecure.get(`/My-donation-campaigns/${user?.email}`);
+          const { data } = await axiosSecure.get(`/My-donation-campaigns/${user?.email}?page=${currentPage}&size=${10}`);
           return data;
         },
       });
-      console.log(data);
+     
 
 
       const { mutateAsync } = useMutation({
-        mutationFn: async (id) => {
-          const info = {pause:true}
-          const { data: pauseData } = await axiosSecure.patch(`/update-cam/${id}`,info);
+        mutationFn: async (item) => {
+          const info = {pause:!item.pause}
+          const { data: pauseData } = await axiosSecure.patch(`/update-cam/${item._id}`,info);
           return pauseData;
         },
         onSuccess: () => {
@@ -59,16 +74,17 @@ const MyCampaigns = () => {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: "Yes, Do it!",
             cancelButtonText: "No, cancel!",
             reverseButtons: true,
           })
           .then(async (result) => {
        
     
-            await mutateAsync(item._id);
+          
     
             if (result.isConfirmed) {
+              await mutateAsync(item);
               swalWithBootstrapButtons.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -89,7 +105,17 @@ const MyCampaigns = () => {
       }
     return (
         <div>
+           <h3 className="text-3xl font-bold">My added Campaigns</h3>
             <Table data={data} onEdit={onEdit} onPause={onPause}/>
+           
+            {count.count > 10 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+     
         </div>
     );
 };

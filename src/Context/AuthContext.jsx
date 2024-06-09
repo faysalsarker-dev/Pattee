@@ -13,14 +13,15 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
-// import useAxios from "../hook/useAxios";
+
+import useAxiosSecure from './../Hook/useAxiosSecure';
 
 const auth = getAuth(app);
 
 export const ContextData = createContext(null);
 
 const AuthContext = ({ children }) => {
-  //   const axiosSecure = useAxios();
+    const axiosSecure = useAxiosSecure();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [favorite, setFavorite] = useState([]);
@@ -84,17 +85,27 @@ const AuthContext = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const userEmail = currentUser?.email || user?.email;
+      const loggedEmail = { email: userEmail };
       setUser(currentUser);
       if (currentUser) {
         setLoading(false);
         saveUser(currentUser)
         console.log(currentUser);
         console.log('user access');
-
+        axiosSecure.post('/jwt', loggedEmail)
+        .then(res => {
+            console.log('token response', res.data);
+      
+        })
 
       } else {
         setLoading(false);
         setUser(null);
+        axiosSecure.post('/logout')
+        .then(res=>{
+          console.log(res.data);
+        })
   
       }
     });

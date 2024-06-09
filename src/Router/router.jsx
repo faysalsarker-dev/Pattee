@@ -73,48 +73,46 @@ const router = createBrowserRouter([
     path: "/user-dashboard",
     element: (
       <RouterProtector>
-        <UserRoot></UserRoot>
+        <UserRoot />
       </RouterProtector>
     ),
     children: [
       {
-        index:true,
-        element: <Addpet></Addpet>,
-      },
-  
-      {
-        path:'my-pets',
-        element: <Mypets></Mypets>,
+        index: true,
+        element: <Addpet />,
       },
       {
-        path:'Update-pet/:id',
-        element:<UpdatePet />,
+        path: "my-pets",
+        element: <Mypets />,
+      },
+      {
+        path: "Update-pet/:id",
+        element: <UpdatePet />,
       },
       {
         path: "Create-Donation-Campaigns",
-        element: <CreateDonation/>,
+        element: <CreateDonation />,
       },
       {
         path: "My-campaigns",
-        element: <MyCampaigns/>,
+        element: <MyCampaigns />,
       },
       {
         path: "Update-campaigns/:id",
-        element: <UpdateCam/>,
+        element: <UpdateCam />,
       },
       {
         path: "Users-list",
-        element: <UsersList/>,
+        element: <UsersList />,
       },
       {
         path: "All-pets",
-        element:<Allpet/>,
+        element: <Allpet />,
       },
       {
         path: "All-Donation",
-        element:<AllDonations/>,
+        element: <AllDonations />,
       },
-     
     ],
   },
  

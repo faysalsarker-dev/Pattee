@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import {
   
@@ -12,6 +12,13 @@ import {
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 const MyTable = ({ data,onEdit, onDelete }) => {
+
+
+
+
+
+
+
   const columns = useMemo(
     () => [
       {
@@ -89,7 +96,8 @@ const MyTable = ({ data,onEdit, onDelete }) => {
       },
     ],
     
-    [onEdit, onDelete]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data,onEdit, onDelete]
   );
 
   const tableInstance = useTable(
@@ -116,7 +124,7 @@ const MyTable = ({ data,onEdit, onDelete }) => {
   };
 
   return (
-    <CardBody className="overflow-y-scroll px-0 ">
+    <CardBody className="overflow-y-scroll px-0 -mt-5">
       <table {...getTableProps()} className="mt-4 w-full min-w-max table-auto text-left">
         <thead className="sticky top-0 z-10 bg-white">
           {headerGroups.map((headerGroup) => (

@@ -65,7 +65,7 @@ const Table = ({ data, onEdit, onPause }) => {
         ),
       },
     ],
-    [onEdit, onPause]
+    [data,onEdit, onPause]
   );
 
   const tableInstance = useTable({ columns, data });
