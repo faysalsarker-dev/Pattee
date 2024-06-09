@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const UsersList = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data = [] ,refetch} = useQuery({
+  const { data = [] ,refetch,isLoading} = useQuery({
     queryKey: ["users-list"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/all-users`);
@@ -90,7 +90,7 @@ const makeAdmin =(user)=>{
   
   
   <div>
-           <UsersTable data={data} makeAdmin={makeAdmin}/>
+           <UsersTable data={data} makeAdmin={makeAdmin} isLoading={isLoading}/>
         </div>
   
   </>)

@@ -5,7 +5,7 @@ import  Table  from "./Table";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+
 import useMycam from "../../../utility/useMycam";
 import { Pagination } from "../../../componenet/Pagination";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ const MyCampaigns = () => {
     }, [count]); 
 
 
-    const { data = [] } = useQuery({
+    const { data = [],isLoading,refetch } = useQuery({
         queryKey: ['My-campaigns',user?.email],
         queryFn: async () => {
           const { data } = await axiosSecure.get(`/My-donation-campaigns/${user?.email}?page=${currentPage}&size=${10}`);
@@ -45,7 +45,8 @@ const MyCampaigns = () => {
           return pauseData;
         },
         onSuccess: () => {
-        toast.success('pause')
+        
+        refetch()
         },
       });
 
@@ -56,7 +57,7 @@ const MyCampaigns = () => {
 
 
       const onEdit = (item )=>{
-        console.log('onEdit',item);
+
         navigate(`/user-dashboard/Update-campaigns/${item._id}`)
       }
       const onPause = (item )=>{
@@ -86,12 +87,12 @@ const MyCampaigns = () => {
             if (result.isConfirmed) {
               await mutateAsync(item);
               swalWithBootstrapButtons.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
+                title: "Pause!",
+                text: "Your Pause has been updated.",
                 icon: "success",
               });
             } else if (
-              /* Read more about handling dismissals below */
+              
               result.dismiss === Swal.DismissReason.cancel
             ) {
               swalWithBootstrapButtons.fire({
@@ -106,9 +107,9 @@ const MyCampaigns = () => {
     return (
         <div>
            <h3 className="text-3xl font-bold">My added Campaigns</h3>
-            <Table data={data} onEdit={onEdit} onPause={onPause}/>
+            <Table data={data} onEdit={onEdit} onPause={onPause} isLoading={isLoading} />
            
-            {count.count > 10 && (
+            {count > 10 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

@@ -16,7 +16,6 @@ import {
 import { NavLink } from "react-router-dom";
 import useAdmin from "../../Hook/useAdmin";
 
-
 export function UserDashBoard() {
   const isAdmin = useAdmin();
 
@@ -24,10 +23,10 @@ export function UserDashBoard() {
     isActive ? "bg-[#F0F2F4] rounded-lg font-bold" : "";
 
   return (
-    <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-2xl border shadow-blue-gray-900/5">
+    <Card className="h-screen w-full max-w-[22rem] p-4 shadow-2xl border shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
-          Sidebar
+          PATTEE
         </Typography>
       </div>
       <List>
@@ -98,7 +97,7 @@ export function UserDashBoard() {
             </NavLink>
           </>
         )}
-      <NavLink to="/user-dashboard" end  className={navLinkClass}>
+        <NavLink to="/user-dashboard" end className={navLinkClass}>
           <ListItem>
             <ListItemPrefix>
               <svg
@@ -140,21 +139,15 @@ export function UserDashBoard() {
             My added pets
           </ListItem>
         </NavLink>
-        <ListItem>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Adoption Request
-          <ListItemSuffix>
-            <Chip
-              value="14"
-              size="sm"
-              variant="ghost"
-              color="blue-gray"
-              className="rounded-full"
-            />
-          </ListItemSuffix>
-        </ListItem>
+        <NavLink to="Adoption-request" className={navLinkClass}>
+          <ListItem>
+            <ListItemPrefix>
+              <InboxIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Adoption Request
+            
+          </ListItem>
+        </NavLink>
         <NavLink to="Create-Donation-Campaigns" className={navLinkClass}>
           <ListItem>
             <ListItemPrefix>

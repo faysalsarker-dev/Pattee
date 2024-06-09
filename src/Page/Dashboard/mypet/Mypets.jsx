@@ -77,11 +77,11 @@ const Mypets = () => {
         reverseButtons: true,
       })
       .then(async (result) => {
-        console.log();
-
-        await mutateAsync(pet._id);
+      
+    
 
         if (result.isConfirmed) {
+          await mutateAsync(pet._id);
           swalWithBootstrapButtons.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
@@ -97,21 +97,7 @@ const Mypets = () => {
       });
   };
 
-  if (isLoading) {
-    return (
-      <div className="p-4">
-        {[...Array(5)].map((_, index) => (
-          <div key={index} className="skeleton-row flex justify-between my-2">
-            <Skeleton className="w-16 h-16" />
-            <Skeleton className="w-32 h-16" />
-            <Skeleton className="w-32 h-16" />
-            <Skeleton className="w-32 h-16" />
-            <Skeleton className="w-32 h-16" />
-          </div>
-        ))}
-      </div>
-    );
-  }
+ 
 
   if (error) {
     return <div className="p-4">Error loading pets data...</div>;
@@ -121,8 +107,8 @@ const Mypets = () => {
     <>
       <div className=" h-[100vh]">
         <h3 className="text-3xl font-bold">My added pets</h3>
-        <MyTable data={data} onEdit={handleEdit} onDelete={handleDelete} />
-        {count.count > 10 && (
+        <MyTable data={data} onEdit={handleEdit} onDelete={handleDelete} isLoading={isLoading} />
+        {count > 10 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

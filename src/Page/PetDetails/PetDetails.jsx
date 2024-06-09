@@ -79,9 +79,12 @@ const PetDetails = () => {
       pet_id: id,
       pet_name: name,
       pet_image: image,
+      donetor_email:email,
+      user_name:user?.displayName,
       address: formData.address,
       number: formData.number,
       email: user?.email,
+      status:'pending'
     };
     console.log(info);
     await mutateAsync(info);

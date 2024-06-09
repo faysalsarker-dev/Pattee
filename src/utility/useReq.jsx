@@ -3,15 +3,15 @@ import useAuth from '../Hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 
-const useMycam = () => {
+const useReq = () => {
   const [count, setCount] = useState(0);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   const { data} = useQuery({
-    queryKey: [user?.email, 'my-cam-count'],
+    queryKey: [user?.email, 'Adoptetion-req'],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/My-campaigns-count/${user?.email}`);
+      const { data } = await axiosSecure.get(`/my-pet-adoptetion/${user?.email}`);
       return data;
     },
     onSuccess: (data) => {
@@ -29,4 +29,4 @@ const useMycam = () => {
   return  count 
 };
 
-export default useMycam;
+export default useReq;

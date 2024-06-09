@@ -9,7 +9,7 @@ const Allpet = () => {
 const navigate= useNavigate()
     const axiosSecure = useAxiosSecure();
 
-    const { data = [] ,refetch} = useQuery({
+    const { data = [] ,refetch,isLoading} = useQuery({
       queryKey: ["users-list"],
       queryFn: async () => {
         const { data } = await axiosSecure.get(`/all-pets`);
@@ -172,7 +172,8 @@ const swalWithBootstrapButtons = Swal.mixin({
 
     return (
         <div>
-            <PetTable data={data} onEdit={onEdit} onDelete={onDelete} onStatus={onStatus}/>
+          <h3 className="text-3xl font-extrabold">All pets</h3>
+            <PetTable data={data} onEdit={onEdit} onDelete={onDelete} isLoading={isLoading} onStatus={onStatus}/>
         </div>
     );
 };

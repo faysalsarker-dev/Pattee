@@ -7,12 +7,12 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Chip
+  
 } from '@material-tailwind/react';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+
 import Skeleton from 'react-loading-skeleton';
 
-const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
+const ReqTable = ({ data,onAccept, onReject,isLoading }) => {
 
 
 
@@ -23,61 +23,41 @@ const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
   const columns = useMemo(
     () => [
       {
-        Header: 'Serial',
-        accessor: (row, index) => index + 1,
-      },
-      {
         Header: 'Image',
-        accessor: 'image',
+        accessor: 'pet_image',
         Cell: ({ cell }) => (
           <img src={cell?.value} alt="Pet" className="w-16 h-16 object-cover rounded-full" />
         ),
       },
       {
+        Header: 'Pet name',
+        accessor: 'pet_name',
+      },
+      {
         Header: 'Name',
-        accessor: 'name',
+        accessor: 'user_name',
       },
       {
-        Header: 'Age',
-        accessor: 'age',
+        Header: 'Email',
+        accessor: 'email',
       },
       {
-        Header: 'Category',
-        accessor: 'category',
+        Header: 'Phone',
+        accessor: 'number',
       },
       {
-        Header: 'Adoption Status',
-        accessor: 'adopted',
-        Cell: ({ cell }) => (
-          <div className="w-max">
-            <Chip
-              variant="ghost"
-              size="sm"
-              value={cell.value ? "Adopted" : "Not Adopted"}
-              color={cell.value ? "green" : "blue-gray"}
-            />
-          </div>
-        ),
+        Header: 'Address',
+        accessor: 'address',
       },
+      
       {
-        Header: 'Edit',
+        Header: 'Accept',
         accessor: '',
         Cell: ({ row }) => (
-          <Tooltip content="Edit Pet">
-            <IconButton variant="text" onClick={() => onEdit(row.original)}>
-              <PencilIcon className="h-4 w-4" />
-            </IconButton>
-          </Tooltip>
-        ),
-      },
-      {
-        Header: 'Adopt',
-        accessor: '',
-        Cell: ({ row }) => (
-          <Tooltip content="Adopt">
-            <IconButton className='border' variant="text">
+          <Tooltip content="Accept">
+            <IconButton variant="text" onClick={() => onAccept(row.original)}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 </svg>
 
             </IconButton>
@@ -85,20 +65,25 @@ const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
         ),
       },
       {
-        Header: 'Delete',
+        Header: 'Reject',
         accessor: '',
         Cell: ({ row }) => (
-          <Tooltip content="Delete Pet">
-            <IconButton variant="text" onClick={() => onDelete(row.original)}>
-              <TrashIcon className="h-4 w-4" />
+          <Tooltip content="Reject">
+            <IconButton className='border' variant="text" onClick={()=>onReject(row.original)}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+
+
             </IconButton>
           </Tooltip>
         ),
-      },
+      }
+
     ],
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data,onEdit, onDelete]
+    [data,onAccept, onReject]
   );
 
   const tableInstance = useTable(
@@ -156,6 +141,10 @@ const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
       </CardBody>
     );
   }
+
+
+
+
   return (
     <CardBody className="overflow-y-scroll px-0 -mt-5">
       <table {...getTableProps()} className="mt-4 w-full min-w-max table-auto text-left">
@@ -188,9 +177,16 @@ const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-100">
+              <tr {...row.getRowProps()} key={row.id} className={`hover:bg-gray-100 `} >
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} key={cell.column.id} className="px-4 py-2 border-b border-gray-200">
+                  <td {...cell.getCellProps()} key={cell.column.id} 
+                  
+                  className={`px-4 py-2 border-b-2 ${
+                    row.original.status === 'accept' ? 'border-light-green-500' :
+                    row.original.status === 'reject' ? 'border-red-500' : ''
+                  } `}
+                  
+                  >
                     {cell.render('Cell')}
                   </td>
                 ))}
@@ -204,4 +200,4 @@ const MyTable = ({ data,onEdit, onDelete,isLoading }) => {
   );
 };
 
-export default MyTable;
+export default ReqTable;

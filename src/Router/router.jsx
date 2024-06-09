@@ -20,6 +20,7 @@ import UpdateCam from "../Page/Dashboard/PetUpdate/UpdateCam";
 import UsersList from './../Page/Admin/UsersList';
 import Allpet from "../Page/Admin/Allpet";
 import AllDonations from "../Page/Admin/AllDonations";
+import Request from "../Page/Adoption-request/Request";
 
 
 
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: "All-Donation",
         element: <AllDonations />,
+      },
+      {
+        path: "Adoption-request",
+        element: <Request/>,
       },
     ],
   },
