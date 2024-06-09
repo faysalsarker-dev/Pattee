@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon, PresentationChartBarIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import {  Link, NavLink } from "react-router-dom";
-
+import logo from './../../src/assets/img/pngwing.com.png'
 
 import {
   Menu,
@@ -161,8 +161,9 @@ export function NavbarSimple() {
           as="a"
           href="#"
           variant="h6"
-          className="mr-4 cursor-pointer py-1.5"
+          className="mr-4 cursor-pointer py-1.5 flex justify-center gap-4 items-center"
         >
+          <img src={logo} className="w-8" alt="" />
           Patte
         </Typography>
         <div className="hidden lg:block">

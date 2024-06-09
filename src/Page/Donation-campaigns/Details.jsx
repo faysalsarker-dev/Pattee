@@ -5,7 +5,8 @@ import { Alert, Button, Card, CardBody, CardHeader, Dialog, Typography } from '@
 import Skeleton from 'react-loading-skeleton';
 import { useState } from 'react';
 import CheckOut from './CheckOut';
-
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 const Details = () => {
     const { id } = useParams();
     const [open, setOpen] = useState(false);
@@ -14,12 +15,16 @@ const Details = () => {
     const axiosCommon = useAxios();
 
     const { data = {}, isLoading } = useQuery({
-        queryKey: ["pet", id],
+        queryKey: ["campaigns", id],
         queryFn: async () => {
             const { data } = await axiosCommon.get(`/campaigns-details/${id}`);
             return data;
         },
     });
+
+    const stripePromise = loadStripe(import.meta.env.VITE_STRIPE);
+
+
 
     const exPire = data.last_date ? new Date(data.last_date) < new Date() : false;
 
@@ -99,8 +104,31 @@ const Details = () => {
                         <Typography variant="h5" color="blue-gray" className="text-center mb-4">
                             Donation Form
                         </Typography>
-                        <CheckOut />
+
+
+
+
+
+
+
+<Elements  stripe={stripePromise}>
+    
+                            <CheckOut data={data} />
+    
+    
+</Elements>
+
+
                     </CardBody>
+
+
+
+
+
+
+
+
+
                 </Card>
             </Dialog>
         </>

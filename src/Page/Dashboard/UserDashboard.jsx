@@ -4,8 +4,6 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -13,9 +11,9 @@ import {
   InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAdmin from "../../Hook/useAdmin";
-
+import logo from './../../assets/img/pngwing.com.png';
 export function UserDashBoard() {
   const isAdmin = useAdmin();
 
@@ -24,11 +22,14 @@ export function UserDashBoard() {
 
   return (
     <Card className="h-screen w-full max-w-[22rem] p-4 shadow-2xl border shadow-blue-gray-900/5">
-      <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray">
-          PATTEE
-        </Typography>
-      </div>
+   <Link to='/'>
+        <div className="mb-2 p-4">
+          <Typography className="flex items-center gap-4" variant="h5" color="blue-gray">
+            <img src={logo} className="w-9" alt="" />
+            PATTEE
+          </Typography>
+        </div>
+   </Link>
       <List>
         {isAdmin && (
           <>

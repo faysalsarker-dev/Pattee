@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 
 const DonationCard = ({pd}) => {
+  const progress = (pd.donation_amount / pd.maximum_amount) * 100;
     return (
         <Card className="w-full max-w-[26rem] shadow-lg">
         <CardHeader floated={false} color="blue-gray">
@@ -35,10 +36,10 @@ const DonationCard = ({pd}) => {
           </div>
 
          <div className="flex justify-between items-center"> 
-           <div>donated :</div>
-           <div>maximum : ${pd.Maximum_amount}</div>
+           <div>donated :${pd.donation_amount}</div>
+           <div>maximum :${pd.maximum_amount}</div>
             </div>
-            <Progress color="blue" value={50} />
+            <div className="mt-5"><Progress color="blue" value={progress} /></div>
         </CardBody>
         <CardFooter className="pt-3">
      <Link to={`/Donation-details/${pd._id}`}>
