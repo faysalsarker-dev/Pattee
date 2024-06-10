@@ -13,7 +13,6 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-
 import useAxiosSecure from './../Hook/useAxiosSecure';
 import useAxios from "../Hook/useAxiosCommon";
 
@@ -22,101 +21,106 @@ const auth = getAuth(app);
 export const ContextData = createContext(null);
 
 const AuthContext = ({ children }) => {
-  const axiosCommon =useAxios()
-    const axiosSecure = useAxiosSecure();
+  const axiosCommon = useAxios();
+  const axiosSecure = useAxiosSecure();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   const GoogleProvider = new GoogleAuthProvider();
-  const GithubeProvider = new GithubAuthProvider();
+  const GithubProvider = new GithubAuthProvider();
 
-  //create user with email and password
-  const createUser = (email, password) => {
+  // Create user with email and password
+  const createUser = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await saveUser(userCredential.user);
+    return userCredential;
   };
 
-  // sign user with email and password
-  const signIn = (email, password) => {
+  // Sign user in with email and password
+  const signIn = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    await saveUser(userCredential.user);
+    return userCredential;
   };
 
-  //  user profile name and photo
-  const profileUpdate = (name, photo) => {
+  // Update user profile name and photo
+  const profileUpdate = async (name, photo) => {
     setLoading(true);
-    return updateProfile(auth.currentUser, {
+    await updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photo,
     });
+    const updatedUser = {
+      ...auth.currentUser,
+      displayName: name,
+      photoURL: photo
+    };
+    setUser(updatedUser);
+    await saveUser(updatedUser);
   };
 
-  //  Log Out
+  // Log out
   const logOut = () => {
-    setLoading(false);
+    setLoading(true); // Set loading to true while logging out
     return signOut(auth);
   };
 
-  // Google
-  const googleLogin = () => {
+  // Google login
+  const googleLogin = async () => {
     setLoading(true);
-    return signInWithPopup(auth, GoogleProvider);
+    const result = await signInWithPopup(auth, GoogleProvider);
+    await saveUser(result.user);
+    return result;
   };
 
-  // Githube
-  const githubeLogin = () => {
+  // Github login
+  const githubLogin = async () => {
     setLoading(true);
-    return signInWithPopup(auth, GithubeProvider);
+    const result = await signInWithPopup(auth, GithubProvider);
+    await saveUser(result.user);
+    return result;
   };
 
-  const saveUser = async (user) => {
+  // Save user
+  const saveUser = async (neWuser) => {
     const currentUser = {
-      name:user?.displayName,
-      email: user?.email,
-      profile:user?.photoURL,
+      name: neWuser?.displayName,
+      email: neWuser?.email,
+      profile: neWuser?.photoURL,
       role: "user",
-     
     };
-    const { data } = await axiosCommon.post(
-      `/users`,
-      currentUser
-    );
+    const { data } = await axiosCommon.post("/users", currentUser);
     return data;
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      const userEmail = currentUser?.email || user?.email;
-      const loggedEmail = { email: userEmail };
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
         setLoading(false);
-        saveUser(currentUser)
+        await saveUser(currentUser);
         console.log(currentUser);
         console.log('user access');
+        const loggedEmail = { email: currentUser.email };
         axiosSecure.post('/jwt', loggedEmail)
-        .then(res => {
+          .then(res => {
             console.log('token response', res.data);
-      
-        })
-
+          });
       } else {
         setLoading(false);
         setUser(null);
         axiosSecure.post('/logout')
-        .then(res=>{
-          console.log(res.data);
-        })
-  
+          .then(res => {
+            console.log(res.data);
+          });
       }
     });
     return () => {
       unsubscribe();
     };
- 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth,user]);
+  }, [axiosSecure, user?.email]);
 
   const contextData = {
     createUser,
@@ -128,11 +132,13 @@ const AuthContext = ({ children }) => {
     setLoading,
     googleLogin,
     setUser,
-    githubeLogin,
+    githubLogin,
   };
 
   return (
-    <ContextData.Provider value={contextData}>{children}</ContextData.Provider>
+    <ContextData.Provider value={contextData}>
+      {children}
+    </ContextData.Provider>
   );
 };
 

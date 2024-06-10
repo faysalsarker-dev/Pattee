@@ -12,7 +12,8 @@ export function Register() {
   const [imageUrl, setImageUrl] = useState(null);
   const [img, setImg] = useState(null);
   const navigate = useNavigate();
-  const { createUser, profileUpdate ,googleLogin ,setUser,loading} = useAuth();
+  const [err,setErr]=useState(false)
+  const { createUser, profileUpdate ,googleLogin ,setUser,loading,setLoading} = useAuth();
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = async (data) => {
@@ -35,7 +36,11 @@ export function Register() {
                           
                       })
                       navigate('/');
-              })
+              }).catch(error => {
+                setErr(error.message);
+                setLoading(false)
+
+            })
 
               
       } catch (error) {
@@ -186,7 +191,11 @@ export function Register() {
               </p>
             )}
           </div>
-
+{
+  err &&  <p className="text-red-600">
+  {err}
+</p>
+}
           <Button
           disabled={loading}
             type="submit"

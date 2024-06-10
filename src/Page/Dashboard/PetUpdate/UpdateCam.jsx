@@ -108,8 +108,8 @@ import {
   
         const newData = {
           image: imgData ? imgData.data.display_url : imageUrl,
-          name: formData.pet_name,
-          maximum_amount: parseFloat(formData.maximum_amount),
+          name: formData.pet_name?formData.pet_name:data.name,
+          maximum_amount: parseFloat(formData.maximum_amount?formData.maximum_amount:data.maximum_amount),
           last_date: date,
           short_des: formData.short_des,
           long_des: value,
