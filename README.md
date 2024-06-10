@@ -79,7 +79,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 - **Name:** Your Name
-- **Email:** your-email@example.com
+- **Email:** Faysalsarker.dev@gmail.com
 - **Project Link:** [https://pattee-29048.web.app](https://pattee-29048.web.app)
 
 ---

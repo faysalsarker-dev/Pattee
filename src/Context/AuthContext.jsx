@@ -116,7 +116,7 @@ const AuthContext = ({ children }) => {
     };
  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, [auth,user]);
 
   const contextData = {
     createUser,
