@@ -46,8 +46,8 @@ const AllCampaigns = () => {
                         </div>
                     ))
                 ) : (
-                    data.pages.map((page) => (
-                        page.result.map((campaign) => (
+                    data?.pages?.map((page) => (
+                        page?.result.map((campaign) => (
                             <DonationCard key={campaign._id} pd={campaign} />
                         ))
                     ))
@@ -63,7 +63,7 @@ const AllCampaigns = () => {
                     </div>
                 )}
             </div>
-            {error && <p>An error occurred</p>}
+            {error && <p className="text-center text-red-500">An error occurred {error.message}</p>}
         </>
     );
 };

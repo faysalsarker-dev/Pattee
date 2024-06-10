@@ -212,14 +212,8 @@ export function Register() {
          
         </form>
         <div className='flex justify-center gap-2 '>
-                        <button className="w-full"  disabled={loading} onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3">    {loading ? (
-      <BeatLoader size={6} />
-    ) : (
-      <>
-        <img className="w-6" src="https://i.ibb.co/3ShjXGS/google.png" alt="google" />
-        Google
-      </>
-    )}</div></button>
+                        <button className="w-full"  disabled={loading} onClick={handleGoogle} ><div className="flex justify-center gap-4 items-center  px-3 rounded-full border-black border py-3"><img className="w-6" src="https://i.ibb.co/3ShjXGS/google.png" alt="google" />
+        Google</div></button>
                         <button className="w-full" disabled={loading}><div className="flex justify-center gap-4 items-center p-4 rounded-full border-black border"><img className=' w-6' src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="githube" border="0" />Github</div></button>
 
                       

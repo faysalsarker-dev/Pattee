@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import useAuth from './../../Hook/useAuth';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
-import { Input, Typography } from '@material-tailwind/react';
+import { Button, Input, Typography } from '@material-tailwind/react';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
-const CheckOut = ({data}) => {
+const CheckOut = ({data,setConfirm,setOpen,open}) => {
   const axiosSecure = useAxiosSecure();
   const stripe = useStripe();
   const elements = useElements();
@@ -21,6 +21,7 @@ const CheckOut = ({data}) => {
     if (price > 0) {
       getClientSecret(price);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price]);
 
   const getClientSecret = async (price) => {
@@ -42,7 +43,20 @@ const CheckOut = ({data}) => {
       return pauseData;
     },
     onSuccess: () => {
-    toast.success('donation succecful')
+      setConfirm(true)
+      setOpen(!open)
+      toast.success('donation succecful')
+    },
+  });
+
+  const { mutateAsync:mutaedDonation } = useMutation({
+    mutationFn: async (info) => {
+ 
+      const { data: pauseData } = await axiosSecure.post(`/donation`,info);
+      return pauseData;
+    },
+    onSuccess: () => {
+   
     
     },
   });
@@ -67,7 +81,8 @@ const CheckOut = ({data}) => {
 
     setProcessing(true);
 
-    // Create a payment method
+  
+    // eslint-disable-next-line no-unused-vars
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
@@ -101,11 +116,20 @@ const CheckOut = ({data}) => {
 
     if (paymentIntent.status === 'succeeded') {
       console.log('[PaymentIntent]', paymentIntent);
-      // Create payment info object
+     
       const paymentInfo = {
         transactionId: paymentIntent.id,
+        name: user?.displayName,
+        email: user?.email,
+        pet_id: data._id,
+        campaigns_owner: data.email,
+        amount:price,
         date: new Date(),
       };
+
+
+   
+    await mutaedDonation(paymentInfo)
      await mutateAsync()
     }
 
@@ -114,19 +138,27 @@ const CheckOut = ({data}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Typography variant="h4" color="blue-gray" className="mb-6 text-center">
-        Donation amount
+<div className='space-y-2'>
+  <Input  label={user?.displayName} disabled />
+  <Input label={user?.email} disabled />
+</div>
+     
+ <div className='my-5'>
+        <Input 
+         type="number"
+         size="lg"
+         onBlur={(e) => setPrice(parseFloat(e.target.value))}
+  
+      
+        
+    
+        
+        label=" Donation amount" />
+ </div>
+    
+       <Typography variant="h6" color="blue-gray" className="mb-6 ">
+        Add your card info
       </Typography>
-      <Input
-        type="number"
-        size="lg"
-        onBlur={(e) => setPrice(parseFloat(e.target.value))}
-        placeholder="Enter donation amount"
-        className={`!border-t-blue-gray-200 focus:!border-primary`}
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-      />
       <CardElement
         options={{
           style: {
@@ -144,9 +176,9 @@ const CheckOut = ({data}) => {
         }}
       />
       {cardError && <p className="text-red-500">{cardError}</p>}
-      <button type="submit" disabled={!stripe || !clientSecret || processing}>
+      <Button fullWidth className='bg-primary mt-10' type="submit" disabled={!stripe || !clientSecret || processing}>
         {processing ? 'Processing...' : 'Pay'}
-      </button>
+      </Button>
     </form>
   );
 };

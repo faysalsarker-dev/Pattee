@@ -1,12 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import PetTable from "./PetsTable";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
 const Allpet = () => {
 const navigate= useNavigate()
+const location = useLocation()
     const axiosSecure = useAxiosSecure();
 
     const { data = [] ,refetch,isLoading} = useQuery({
@@ -20,39 +21,30 @@ const navigate= useNavigate()
     const onEdit=(pet)=>{
         if (pet && pet._id) {
            
-            navigate(`/user-dashboard/Update-pet/${pet._id}`);
+            navigate(`/user-dashboard/Update-pet/${pet._id}`, { state: { from: location.pathname } });
           }
     }
     
-    const { mutateAsync: mutateStatus } = useMutation({
-        mutationFn: async (pet) => {
-            const newData = !pet.adopted;
-            const info = {
-                image: pet.image,
-                name: pet.name,
-                age: pet.age,
-                location: pet.location,
-                short_des: pet.short_des,
-                long_des: pet.long_des,
-                category: pet.category,
-                email: pet.email,
-                date: pet.date,
-                adopted: newData
-            };
-            const { data } = await axiosSecure.patch(`/pet-adopt/${pet._id}`, info);
-            return data;
-        },
-        onSuccess: () => {
-            refetch();
-        },
-        onError: (err) => {
-            console.log(err);
-        }
-    });
+
     
 
 
-
+    const { mutateAsync: mutateStatus } = useMutation({
+      mutationFn: async (pet) => {
+        const status = !pet.adopted
+        const info = {
+          adopted:status
+        };
+        const { data: formdata } = await axiosSecure.patch(`/pet-adopt/${pet._id}`, info);
+        return formdata;
+      },
+      onSuccess:()=>{
+        refetch();
+      },
+      onError: (error) => {
+        console.error("Error updating pet status:", error);
+      }
+    });
 
 
 
@@ -73,23 +65,24 @@ const onStatus =(pet)=>{
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
+          confirmButtonText: "Yes, Do  it!",
           cancelButtonText: "No, cancel!",
           reverseButtons: true,
         })
         .then(async (result) => {
-          console.log();
+        
     
-          await mutateStatus(pet._id);
+        
     
           if (result.isConfirmed) {
+            await mutateStatus(pet);
             swalWithBootstrapButtons.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
+              title: "Status!",
+              text: "Your file has been Changed.",
               icon: "success",
             });
           } else if (
-            /* Read more about handling dismissals below */
+           
             result.dismiss === Swal.DismissReason.cancel
           ) {
             swalWithBootstrapButtons.fire({

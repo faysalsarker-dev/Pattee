@@ -14,14 +14,16 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import useAdmin from "../../Hook/useAdmin";
 import logo from './../../assets/img/pngwing.com.png';
+import useAuth from "../../Hook/useAuth";
 export function UserDashBoard() {
+  const {logOut}=useAuth()
   const isAdmin = useAdmin();
 
   const navLinkClass = ({ isActive }) =>
     isActive ? "bg-[#F0F2F4] rounded-lg font-bold" : "";
 
   return (
-    <Card className="h-screen w-full max-w-[22rem] p-4 shadow-2xl border shadow-blue-gray-900/5">
+    <Card className="h-screen dark:border  dark:bg-transparent w-full max-w-[22rem] p-4 shadow-2xl border shadow-blue-gray-900/5">
    <Link to='/'>
         <div className="mb-2 p-4">
           <Typography className="flex items-center gap-4" variant="h5" color="blue-gray">
@@ -165,7 +167,7 @@ export function UserDashBoard() {
             My Donation Camp
           </ListItem>
         </NavLink>
-        <ListItem>
+        <ListItem onClick={logOut}>
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

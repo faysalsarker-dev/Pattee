@@ -12,19 +12,21 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import axios from "axios";
+
 
 import useAxiosSecure from './../Hook/useAxiosSecure';
+import useAxios from "../Hook/useAxiosCommon";
 
 const auth = getAuth(app);
 
 export const ContextData = createContext(null);
 
 const AuthContext = ({ children }) => {
+  const axiosCommon =useAxios()
     const axiosSecure = useAxiosSecure();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [favorite, setFavorite] = useState([]);
+
 
   const GoogleProvider = new GoogleAuthProvider();
   const GithubeProvider = new GithubAuthProvider();
@@ -76,8 +78,8 @@ const AuthContext = ({ children }) => {
       role: "user",
      
     };
-    const { data } = await axios.post(
-      `http://localhost:5000/users`,
+    const { data } = await axiosCommon.post(
+      `/users`,
       currentUser
     );
     return data;
@@ -126,8 +128,6 @@ const AuthContext = ({ children }) => {
     setLoading,
     googleLogin,
     setUser,
-    favorite,
-    setFavorite,
     githubeLogin,
   };
 

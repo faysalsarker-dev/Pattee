@@ -7,10 +7,12 @@ import { useState } from 'react';
 import CheckOut from './CheckOut';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import  ReactQuill  from 'react-quill';
+import DonationCard from './DonationCard';
 const Details = () => {
     const { id } = useParams();
     const [open, setOpen] = useState(false);
-
+const [confirm,setConfirm] = useState(false)
     const handleOpen = () => setOpen(!open);
     const axiosCommon = useAxios();
 
@@ -22,7 +24,22 @@ const Details = () => {
         },
     });
 
+  
+    const {
+        data:recomendedData
+      
+    } = useQuery({
+        queryKey: ['Recomended'],
+        queryFn: async () => {
+            const response = await axiosCommon.get(`/all-donation-campaigns?page=${1}`);
+            return response.data;
+        },
+       
+    });
+console.log(recomendedData);
+
     const stripePromise = loadStripe(import.meta.env.VITE_STRIPE);
+
 
 
 
@@ -51,8 +68,8 @@ const Details = () => {
                     </h2>
                 </Alert>
             )}
-            <Card className="w-full grid lg:grid-cols-2 grid-cols-1 py-4 mt-6">
-                <CardHeader shadow={false} floated={false} className="p-4">
+            <Card className="w-full grid lg:grid-cols-2 bg-transparent grid-cols-1 py-4 mt-6">
+                <CardHeader shadow={false} floated={false} className="p-4 bg-transparent">
                     {isLoading ? (
                         <Skeleton height={350} />
                     ) : (
@@ -77,7 +94,14 @@ const Details = () => {
                     </Typography>
                     <Typography className="mb-4">
                         <span className="font-bold">Description: </span>
-                        {isLoading ? <Skeleton count={4} /> : data.long_des}
+                        {isLoading ? <Skeleton count={4} /> : (<ReactQuill
+          theme="snow" 
+          value={data.long_des}
+          readOnly={true}
+          modules={{ toolbar: false }}
+          className="outline-none"
+        
+        />)}
                     </Typography>
                     <Button
                         onClick={handleOpen}
@@ -96,7 +120,7 @@ const Details = () => {
             >
                 <Card className="mx-auto w-full max-w-[24rem] relative">
                     <CardBody>
-                        <button onClick={handleOpen} className='absolute top-5 right-5 border rounded-full font-extrabold'>
+                        <button onClick={handleOpen} className='absolute bg-blue-gray-200 top-5 right-5 border rounded-full font-extrabold'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
                                 <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                             </svg>
@@ -113,7 +137,7 @@ const Details = () => {
 
 <Elements  stripe={stripePromise}>
     
-                            <CheckOut data={data} />
+                            <CheckOut data={data} setConfirm={setConfirm} setOpen={setOpen} open={open}/>
     
     
 </Elements>
@@ -131,6 +155,34 @@ const Details = () => {
 
                 </Card>
             </Dialog>
+
+            <div className={confirm ? 'block' : 'hidden'}>
+                <h2 className='text-3xl font-semibold mt-10'>Recomended Donation</h2>
+            <div className="mt-5 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                {isLoading ? (
+                    Array.from({ length: 6 }).map((_, index) => (
+                        <div key={index} className="p-4">
+                            <Skeleton height={200} />
+                            <Skeleton height={30} className="mt-4" />
+                            <Skeleton height={20} className="mt-2" />
+                            <Skeleton height={20} className="mt-2" />
+                        </div>
+                    ))
+                ) : (
+                    
+                        recomendedData?.result.slice(0,3).map((campaign) => (
+                            <DonationCard key={campaign._id} pd={campaign} />
+                        
+                    ))
+                )}
+            </div>
+            </div>
+
+
+
+
+
+
         </>
     );
 };

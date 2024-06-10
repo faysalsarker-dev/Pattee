@@ -7,7 +7,7 @@ import Petlist from "../Page/petList/Petlist";
 import PetDetails from "../Page/PetDetails/PetDetails";
 import UserRoot from "../Root/UserRoot";
 import RouterProtector from "./RouterPrtector";
-import  Addpet  from "../Page/Dashboard/Addpet";
+import Addpet from "../Page/Dashboard/Addpet";
 import Errpage from "../Page/404/Errpage";
 import Mypets from "../Page/Dashboard/mypet/Mypets";
 import UpdatePet from "../Page/Dashboard/PetUpdate/UpdatePet";
@@ -17,56 +17,54 @@ import AllCampaigns from "../Page/Donation-campaigns/AllCampaigns";
 import Details from "../Page/Donation-campaigns/Details";
 import MyCampaigns from "../Page/Donation/myDonation/MyCampaigns";
 import UpdateCam from "../Page/Dashboard/PetUpdate/UpdateCam";
-import UsersList from './../Page/Admin/UsersList';
+import UsersList from "./../Page/Admin/UsersList";
 import Allpet from "../Page/Admin/Allpet";
 import AllDonations from "../Page/Admin/AllDonations";
 import Request from "../Page/Adoption-request/Request";
-
-
-
+import AdminProtection from "./AdminProtection";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root></Root>,
-    errorElement:<Errpage></Errpage>,
+    element: <Root />,
+    errorElement: <Errpage />,
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
         path: "/petlist",
-        element: <Petlist></Petlist>,
+        element: <Petlist />,
       },
       {
         path: "/category/:cetegory",
-        element: <Category></Category>,
+        element: <Category />,
       },
       {
         path: "/pet/:id",
-        element: <PetDetails></PetDetails>,
+        element: <PetDetails />,
       },
       {
         path: "/pet/:id",
-        element: <PetDetails></PetDetails>,
+        element: <PetDetails />,
       },
-   
+
       {
         path: "/All-Donation-Campaigns",
-        element: <AllCampaigns/>,
+        element: <AllCampaigns />,
       },
       {
         path: "/Donation-details/:id",
-        element: <Details/>,
+        element: <Details />,
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register/>,
+        element: <Register />,
       },
     ],
   },
@@ -80,47 +78,86 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Addpet />,
+        element: (
+          <RouterProtector>
+            <Addpet />
+          </RouterProtector>
+        ),
       },
       {
         path: "my-pets",
-        element: <Mypets />,
+        element: (
+          <RouterProtector>
+            <Mypets />
+          </RouterProtector>
+        ),
       },
       {
         path: "Update-pet/:id",
-        element: <UpdatePet />,
+        element: (
+          <RouterProtector>
+            <UpdatePet />
+          </RouterProtector>
+        ),
       },
       {
         path: "Create-Donation-Campaigns",
-        element: <CreateDonation />,
+        element: (
+          <RouterProtector>
+            <CreateDonation />
+          </RouterProtector>
+        ),
       },
       {
         path: "My-campaigns",
-        element: <MyCampaigns />,
+        element: (
+          <RouterProtector>
+            <MyCampaigns />
+          </RouterProtector>
+        ),
       },
       {
         path: "Update-campaigns/:id",
-        element: <UpdateCam />,
-      },
-      {
-        path: "Users-list",
-        element: <UsersList />,
-      },
-      {
-        path: "All-pets",
-        element: <Allpet />,
-      },
-      {
-        path: "All-Donation",
-        element: <AllDonations />,
+        element: (
+          <RouterProtector>
+            <UpdateCam />
+          </RouterProtector>
+        ),
       },
       {
         path: "Adoption-request",
-        element: <Request/>,
+        element: (
+          <RouterProtector>
+            <Request />
+          </RouterProtector>
+        ),
+      },
+      {
+        path: "Users-list",
+        element: (
+          <AdminProtection>
+            <UsersList />
+          </AdminProtection>
+        ),
+      },
+      {
+        path: "All-pets",
+        element: (
+          <AdminProtection>
+            <Allpet />
+          </AdminProtection>
+        ),
+      },
+      {
+        path: "All-Donation",
+        element: (
+          <AdminProtection>
+            <AllDonations />
+          </AdminProtection>
+        ),
       },
     ],
   },
- 
 ]);
 
 export default router;

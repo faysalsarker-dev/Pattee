@@ -61,7 +61,7 @@ const Petlist = () => {
             defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={options}
-            className="mt-2"
+            className="mt-2 bg-transparent dark:text-black"
           />
         </div>
 
@@ -109,8 +109,8 @@ const Petlist = () => {
             </div>
           ))
         ) : (
-          data.pages.map((page) =>
-            page.pets.map((pd) => (
+          data?.pages.map((page) =>
+            page?.pets.map((pd) => (
               <CardDefault key={pd._id} pd={pd}></CardDefault>
             ))
           )
@@ -126,7 +126,7 @@ const Petlist = () => {
             </div>}
       </div>
 
-      {error && <p>An error occurred</p>}
+      {error && <p className="text-red-500 text-center">An error occurred {error.message}</p>}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Collapse,
@@ -21,19 +21,21 @@ import {
 } from "@material-tailwind/react";
 import useAuth from "../Hook/useAuth";
 import useAdmin from "../Hook/useAdmin";
- 
+
 export function ProfileMenu() {
   const {user,logOut}=useAuth()
   return (
     <Menu>
       <MenuHandler>
      
-          <Avatar
-            variant="circular"
-            alt="tania andrew"
-            className="cursor-pointer h-10 w-10"
-            src={user?.photoURL}
-          />
+   <div className="border-2 border-primary rounded-full p-1">
+            <Avatar
+              variant="circular"
+              alt="tania andrew"
+              className="cursor-pointer h-10 w-10"
+              src={user?.photoURL}
+            />
+   </div>
      
       </MenuHandler>
       <MenuList>
@@ -85,7 +87,7 @@ function NavList() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-medium"
+        className="p-1 font-medium dark:text-white"
       >
           <NavLink
           to="/"
@@ -102,7 +104,7 @@ function NavList() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-medium"
+        className="p-1 font-medium dark:text-white"
       >
                <NavLink
           to="/petlist"
@@ -119,7 +121,7 @@ function NavList() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-medium"
+        className="p-1 font-medium dark:text-white"
       >
                 <NavLink
           to="/All-Donation-Campaigns"
@@ -136,7 +138,43 @@ function NavList() {
     </ul>
   );
 }
- 
+import { Switch } from "@material-tailwind/react";
+ import '../App.css'
+export function SwitchCustomStyles() {
+  const [theme,setTheme]=useState(false)
+  
+
+const onTheme=()=>{
+  setTheme(!theme)
+  if (!theme) {
+    document.getElementById('html').classList.add('dark');
+  } else {
+    document.getElementById('html').classList.remove('dark');
+  }
+
+}
+
+
+
+
+  return (
+    <Switch
+    onClick={onTheme}
+      id="custom-switch-component"
+      ripple={false}
+      className="h-full w-full checked:bg-[#2ec946]"
+      containerProps={{
+        className: "w-11 h-6",
+      }}
+      circleProps={{
+        className: "before:hidden left-0.5 border-none",
+      }}
+    />
+  );
+}
+
+
+
 export function NavbarSimple() {
   const [openNav, setOpenNav] = React.useState(false);
   const {user} = useAuth();
@@ -155,24 +193,26 @@ export function NavbarSimple() {
   }, []);
  
   return (
-    <Navbar className="mx-auto  sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-1 lg:px-8 lg:py-4">
+    <Navbar className="mx-auto border-0  blur-0 bg-transparent sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-1 lg:px-8 lg:py-4">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          variant="h6"
-          className="mr-4 cursor-pointer py-1.5 flex justify-center gap-4 items-center"
-        >
-          <img src={logo} className="w-8" alt="" />
-          Patte
-        </Typography>
+<Link to='/'>
+          <Typography
+            as="a"
+          
+            variant="h6"
+            className="mr-4 cursor-pointer py-1.5 flex justify-center dark:text-white gap-4 items-center"
+          >
+            <img src={logo} className="w-8 shadow-2xl" alt="" />
+            <span className="lg:text-3xl lg:font-extrabold text-2xl font-bold ">Pattee</span>
+          </Typography>
+</Link>
         <div className="hidden lg:block">
           <NavList />
          
         </div>
 
 <div className="flex items-center gap-3">
-  
+  <SwitchCustomStyles/>
   
   {
     user? (<>

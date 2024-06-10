@@ -1,34 +1,34 @@
 import { Typewriter } from 'react-simple-typewriter';
 
-
 const Banner = () => {
-    return (
-        <div className="flex gap-4 justify-around items-center lg:h-[80vh] md:h-[40vh] sm:h-[40vh] h-[45vh] rounded-xl my-4 p-4 bg-white ">
-        <div className="text-center">
-          <h3 className="text-4xl font-bold mb-4">
-            <Typewriter
-              words={['Take a Good Friend', 'Welcome to Our World of Companionship']}
-              loop={5}
-              cursor
-              cursorStyle='_'
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={1000}
-            />
-          </h3>
-          <p className="text-lg font-medium text-gray-700">
-            In a world of uncertainties, find solace in the unconditional love of your faithful friends. Welcome to a place where companionship knows no bounds.
-          </p>
+  return (
+    <>
+      <div className='lg:h-[80vh] md:h-[40vh] sm:h-[40vh] h-[45vh] relative rounded-xl my-4 p-4'>
+        <div className='absolute inset-0 w-full h-full'>
+          <div className="w-full h-full bg-cover bg-center rounded-lg" style={{ 
+            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("https://img.freepik.com/premium-photo/group-puppies-are-sitting-ledge-with-one-them-being-mix-white_564714-43494.jpg?w=1060")`
+          }}>
+         
+          </div>
         </div>
-        <div>
-          <img
-            src="https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg?t=st=1717229373~exp=1717232973~hmac=24536afcc96e9acfefc036c74a79bc6647a20308e854ef74b550e22b597bdd83&w=360"
-            alt="Cat"
-            className="rounded-xl"
-          />
+        <div className="absolute top-1/4 left-0 right-0 z-5 mt-10 text-center space-y-3">
+          <h1 className="md:text-4xl text-2xl md:font-extrabold font-bold text-gray-800 mb-2">Welcome to <span className='text-primary'>Pattee</span></h1>
+          <p className="text-lg font-medium text-gray-700">Where every wag of a tail and purr of contentment brings happiness to your heart.</p>
+          <h3 className="text-4xl font-bold  mb-4 text-[#553a2a]">
+                <Typewriter
+                  words={['Embrace a Furry Companion', 'Discover Unconditional Love']}
+                  loop={false}
+                  cursor
+                  cursorStyle='_'
+                  typeSpeed={100}
+                  deleteSpeed={100}
+                  delaySpeed={1000}
+                />
+              </h3>
         </div>
       </div>
-    );
+    </>
+  );
 };
 
 export default Banner;

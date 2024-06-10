@@ -20,6 +20,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "./../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
 
 const PetDetails = () => {
   const [open, setOpen] = useState(false);
@@ -86,9 +87,11 @@ const PetDetails = () => {
       email: user?.email,
       status:'pending'
     };
-    console.log(info);
+    
     await mutateAsync(info);
+    setOpen(!open)
   };
+
 
   const handleOpen = () => setOpen(!open);
 
@@ -121,14 +124,25 @@ const PetDetails = () => {
             <span className="font-bold">About the pet: </span>
             {isLoading ? <Skeleton count={2} /> : short_des}
           </Typography>
-          <Typography>
-            <span className="font-bold">Description: </span>
-            {isLoading ? <Skeleton count={4} /> : long_des}
-          </Typography>
+          <Typography variant="body1"> 
+      <span className="font-bold">Description: </span>
+      {isLoading ? (
+        <Skeleton count={4} />
+      ) : (
+        <ReactQuill
+          theme="snow" 
+          value={long_des}
+          readOnly={true}
+          modules={{ toolbar: false }}
+          className="outline-none"
+        
+        />
+      )}
+    </Typography>
           <Button
             onClick={handleOpen}
             className="bg-primary mt-2"
-            disabled={isLoading}
+            disabled={isLoading || !user}
           >
             {isLoading ? <Skeleton width={100} /> : "Adopt"}
           </Button>

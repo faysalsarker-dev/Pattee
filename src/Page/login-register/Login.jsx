@@ -1,7 +1,7 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import useAuth from "../../Hook/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
@@ -10,6 +10,7 @@ const Login = () => {
     const { signIn,  googleLogin ,user,loading} = useAuth();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
+    const location = useLocation()
     const onSubmit = async (data) => {
         try {
            
@@ -46,7 +47,7 @@ const Login = () => {
       if (user) {
           navigate(location.state ? location.state : '/');
       }
-  }, [navigate,user]);
+  }, [navigate,user ,location.state]);
 
 
 

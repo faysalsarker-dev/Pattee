@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const CreateDonation = () => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -69,7 +70,7 @@ const CreateDonation = () => {
         formData.append("image", img);
 
         try {
-            const { data: imgData } = await axiosSecure.post(
+            const { data: imgData } = await axios.post(
                 `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMG_API}`,
                 formData
             );

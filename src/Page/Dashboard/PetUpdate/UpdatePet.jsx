@@ -10,7 +10,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useAuth from "../../../Hook/useAuth";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import  axios  from 'axios';
 const UpdatePet = () => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -24,6 +24,7 @@ const UpdatePet = () => {
   const [host, setHost] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate()
+  const location = useLocation()
 
   const { data: petData = {} } = useQuery({
     queryKey: [user?.email, id],
@@ -77,7 +78,7 @@ const UpdatePet = () => {
       setBtnSpin(false);
       toast.success("Pet updated successfully");
       reset();
-      navigate('/user-dashboard/my-pets')
+      navigate(location.state);
       setImageUrl(null);
       setImg(null);
     },

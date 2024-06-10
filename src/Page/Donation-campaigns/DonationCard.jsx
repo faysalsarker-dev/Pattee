@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const DonationCard = ({pd}) => {
   const progress = (pd.donation_amount / pd.maximum_amount) * 100;
     return (
-        <Card className="w-full max-w-[26rem] shadow-lg">
+        <Card className="w-full max-w-[26rem] shadow-lg dark:bg-transparent dark:border  dark:border-white">
         <CardHeader floated={false} color="blue-gray">
           <img
             src={pd.image}
