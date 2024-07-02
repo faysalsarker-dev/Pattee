@@ -21,7 +21,7 @@ export function Register() {
           const formData = new FormData();
           formData.append("image", img);
 
-          const { data: imgData } = await axios.post(`https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMG_API}`, formData);
+          const { data: imgData } = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_API}`, formData);
 
 
           console.log(imgData.data.display_url);
@@ -30,12 +30,12 @@ export function Register() {
                   profileUpdate(data.name, imgData.data.display_url)
                       .then((res) => {
                           toast.success("Registration successful");
-                          setUser(res)
-                          
+                          setUser(res.user)
+                          navigate('/');
                           reset(); 
-                          
+                           
                       })
-                      navigate('/');
+                     
               }).catch(error => {
                 setErr(error.message);
                 setLoading(false)

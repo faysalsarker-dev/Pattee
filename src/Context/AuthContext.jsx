@@ -33,7 +33,7 @@ const AuthContext = ({ children }) => {
   const createUser = async (email, password) => {
     setLoading(true);
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await saveUser(userCredential.user);
+    
     return userCredential;
   };
 
@@ -41,7 +41,6 @@ const AuthContext = ({ children }) => {
   const signIn = async (email, password) => {
     setLoading(true);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    await saveUser(userCredential.user);
     return userCredential;
   };
 
@@ -58,12 +57,12 @@ const AuthContext = ({ children }) => {
       photoURL: photo
     };
     setUser(updatedUser);
-    await saveUser(updatedUser);
+    await saveUser(updatedUser); 
   };
 
   // Log out
   const logOut = () => {
-    setLoading(true); // Set loading to true while logging out
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -84,13 +83,14 @@ const AuthContext = ({ children }) => {
   };
 
   // Save user
-  const saveUser = async (neWuser) => {
+  const saveUser = async (newUser) => {
     const currentUser = {
-      name: neWuser?.displayName,
-      email: neWuser?.email,
-      profile: neWuser?.photoURL,
+      name: newUser.displayName,
+      email: newUser.email,
+      profile: newUser.photoURL,
       role: "user",
     };
+    console.log(currentUser, 'users create');
     const { data } = await axiosCommon.post("/users", currentUser);
     return data;
   };
@@ -99,15 +99,13 @@ const AuthContext = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        setLoading(false);
-        await saveUser(currentUser);
-        console.log(currentUser);
-        console.log('user access');
         const loggedEmail = { email: currentUser.email };
         axiosSecure.post('/jwt', loggedEmail)
           .then(res => {
             console.log('token response', res.data);
           });
+
+        setLoading(false);
       } else {
         setLoading(false);
         setUser(null);
@@ -120,7 +118,7 @@ const AuthContext = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, [axiosSecure, user?.email]);
+  }, [user,axiosSecure,auth]);
 
   const contextData = {
     createUser,

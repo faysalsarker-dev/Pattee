@@ -71,7 +71,7 @@ const CreateDonation = () => {
 
         try {
             const { data: imgData } = await axios.post(
-                `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMG_API}`,
+                `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_API}`,
                 formData
             );
             const newData = {

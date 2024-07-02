@@ -178,8 +178,7 @@ const onTheme=()=>{
 export function NavbarSimple() {
   const [openNav, setOpenNav] = React.useState(false);
   const {user} = useAuth();
-  const role = useAdmin()
-  console.log(role);
+  
 
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);

@@ -78,8 +78,9 @@ Contributions are what make the open-source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
-- **Name:** Your Name
+- **Name:** Faysal Sarker
 - **Email:** Faysalsarker.dev@gmail.com
+- **GitHub (Server-side):** [Pattee Server Repository](https://github.com/faysalsarker-dev/Pattee-server)
 - **Project Link:** [https://pattee-29048.web.app](https://pattee-29048.web.app)
 
 ---

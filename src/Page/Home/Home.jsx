@@ -71,7 +71,7 @@ const Home = () => {
 
 <div className="container">
 <h3 className="text-3xl font-bold my-6 text-center">Available Pets</h3>
-<div className="container grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+<div className="container grid lg:grid-cols-3 gap-3 md:grid-cols-2 grid-cols-1">
   {isLoading ? (
     <>
       <Skeleton height={200} width={300} style={{ borderRadius: '8px' }} />
